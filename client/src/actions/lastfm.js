@@ -2,6 +2,10 @@ export const REQUEST_CURRENT_TRACK_STARTED = Symbol('REQUEST_CURRENT_TRACK_START
 export const REQUEST_CURRENT_TRACK_SUCCEEDED = Symbol('REQUEST_CURRENT_TRACK_SUCCEEDED');
 export const REQUEST_CURRENT_TRACK_FAILURE = Symbol('REQUEST_CURRENT_TRACK_FAILURE');
 
+export const REQUEST_CURRENT_TRACK_SIMILAR_STARTED = Symbol('REQUEST_CURRENT_TRACK_SIMILAR_STARTED');
+export const REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED = Symbol('REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED');
+export const REQUEST_CURRENT_TRACK_SIMILAR_FAILURE = Symbol('REQUEST_CURRENT_TRACK_SIMILAR_FAILURE');
+
 export const REQUEST_SIMILAR_TRACKS_STARTED = Symbol('REQUEST_SIMILAR_TRACKS_STARTED');
 export const REQUEST_SIMILAR_TRACKS_SUCCEEDED = Symbol('REQUEST_SIMILAR_TRACKS_SUCCEEDED');
 export const REQUEST_SIMILAR_TRACKS_FAILURE = Symbol('REQUEST_SIMILAR_TRACKS_FAILURE');
@@ -9,6 +13,10 @@ export const REQUEST_SIMILAR_TRACKS_FAILURE = Symbol('REQUEST_SIMILAR_TRACKS_FAI
 const requestCurrentTrackStarted = request => ({type: REQUEST_CURRENT_TRACK_STARTED, request});
 const requestCurrentTrackSucceeded = data => ({type: REQUEST_CURRENT_TRACK_SUCCEEDED, data});
 const requestCurrentTrackFailure = (data, error) => ({type: REQUEST_CURRENT_TRACK_FAILURE, data, error});
+
+const requestCurrentTrackSimilarStarted = request => ({type: REQUEST_CURRENT_TRACK_SIMILAR_STARTED, request});
+const requestCurrentTrackSimilarSucceeded = data => ({type: REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED, data});
+const requestCurrentTrackSimilarFailure = (data, error) => ({type: REQUEST_CURRENT_TRACK_SIMILAR_FAILURE, data, error});
 
 const requestSimilarTracksStarted = request => ({type: REQUEST_SIMILAR_TRACKS_STARTED, request});
 const requestSimilarTracksSucceeded = data => ({type: REQUEST_SIMILAR_TRACKS_SUCCEEDED, data});
@@ -21,13 +29,19 @@ function handleErrors(response) {
   return response;
 }
 
+
 /*======================================
 =           CURRENT TRACK             =
 ======================================*/
+function fetchCurrentTrack() {
+  return () => {
+    return fetch('/current-track');
+  }
+}
 export function requestCurrentTrack() {
   return dispatch => {
     dispatch(requestCurrentTrackStarted());
-    return fetch('/current-track')
+    return dispatch(fetchCurrentTrack())
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
@@ -46,9 +60,9 @@ function returnCurrentTrackData (json) {
 /*======================================
 =           SIMILAR TRACKS             =
 ======================================*/
-function requestSimilarTracks(trackName, trackArtist) {
-  return dispatch => {
-    dispatch(requestSimilarTracksStarted());
+
+function fetchSimilarTracks(trackName, trackArtist) {
+  return () => {
     return fetch('/similar-tracks',
     {
       method: "POST",
@@ -60,13 +74,35 @@ function requestSimilarTracks(trackName, trackArtist) {
         trackArtist: trackArtist,
       })
     })
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(json => {
-        let similarTracks = returnSimilarTrackData(json);
-        dispatch(requestSimilarTracksSucceeded(similarTracks));
-      })
-      .catch(error => dispatch(requestSimilarTracksFailure(error)));
+  }
+}
+
+export function requestSimilarTrackOfCurrent () {
+  return (dispatch, getState) => {
+    dispatch(requestCurrentTrackSimilarStarted());
+    let trackName = getState().lastfm.currentTrack.name;
+    let trackArtist = getState().lastfm.currentTrack.artist["#text"];
+    return dispatch(fetchSimilarTracks(trackName, trackArtist))
+    .then(handleErrors)
+    .then(res => res.json())
+    .then(json => {
+      let similarTracks = returnSimilarTrackData(json);
+      dispatch(requestCurrentTrackSimilarSucceeded(similarTracks));
+    })
+    .catch(error => dispatch(requestCurrentTrackSimilarFailure(error)));
+  }
+}
+export function requestSimilarTracks(trackName, trackArtist) {
+  return dispatch => {
+    dispatch(requestSimilarTracksStarted());
+    return dispatch(fetchSimilarTracks(trackName, trackArtist))
+    .then(handleErrors)
+    .then(res => res.json())
+    .then(json => {
+      let similarTracks = returnSimilarTrackData(json);
+      dispatch(requestSimilarTracksSucceeded(similarTracks));
+    })
+    .catch(error => dispatch(requestSimilarTracksFailure(error)));
     }
 }
 function returnSimilarTrackData (json) {
@@ -79,12 +115,11 @@ function returnSimilarTrackData (json) {
 =         SIMILAR TO CURRENT           =
 ======================================*/
 export function requestCurrentTrackThenSimilar() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(requestCurrentTrack())
       .then(function() {
-        let trackName = getState().lastfm.currentTrack.name;
-        let trackArtist = getState().lastfm.currentTrack.artist["#text"];
-        dispatch(requestSimilarTracks(trackName, trackArtist))
+        dispatch(requestSimilarTrackOfCurrent())
       })
     }
 }
+

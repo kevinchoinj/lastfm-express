@@ -9,10 +9,27 @@ class TestButton extends React.Component{
     this.props.lastfmActions.requestCurrentTrackThenSimilar();
   }
 
+  componentDidMount() {
+    this.props.lastfmActions.requestCurrentTrackThenSimilar();
+  }
+
   render(){
+
+    let {
+      currentTrack,
+    } = this.props;
+
 	  return(
 			<div onClick={()=>this.testAction()}>
-        test
+        {currentTrack.artist?
+          <div>
+            {currentTrack.artist["#text"]} - {currentTrack.name}
+          </div>
+          :
+          <div>
+            Loading...
+          </div>
+        }
       </div>
 
 	  );
@@ -21,6 +38,7 @@ class TestButton extends React.Component{
 
 export default connect(
   (state, ownProps) => ({
+    currentTrack: state.lastfm.currentTrack,
   }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
