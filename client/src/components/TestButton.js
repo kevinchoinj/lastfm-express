@@ -6,7 +6,7 @@ import * as lastfmActions from 'actions/lastfm';
 class TestButton extends React.Component{
 
   testAction = () => {
-    this.props.lastfmActions.requestCurrentTrack();
+    this.props.lastfmActions.requestCurrentTrackThenSimilar();
   }
 
   render(){
