@@ -39,7 +39,7 @@ class ArtistOfCurrent extends React.Component{
       <div className="artist_container">
         <div className="artist_left">
           <img src={artistImage} className="artist_image" alt={artistName} />
-          <div>
+          <div className="artist_name">
             <strong>
             {artistName}
             </strong>

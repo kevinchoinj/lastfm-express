@@ -34,7 +34,32 @@
   transition: .3s ease-out;
   font-size: 13px;
   font-family: 'Open Sans', Helvetica, sans-serif;
+  line-height: 22px;
 }
 .username_button:hover {
  background-color: #000;
+}
+
+@media screen and (max-width: 768px){
+  .current_username__container {
+    position: absolute;
+    right: 0px;
+    top:0px;
+    max-width:50%;
+  }
+  .username_label {
+    display: none;
+  }
+  .username_form {
+    margin: 0px;
+  }
+  .username_bottom {
+    display: flex;
+    padding: 12px 0px;
+  }
+  .username_button {
+    background-color: #ddd;
+    color: #000;
+    margin: 0px;
+  }
 }

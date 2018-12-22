@@ -32,21 +32,22 @@ class UsernameForm extends React.Component {
         <div className="username_label">
           Last.fm Username
         </div>
-        <Field
-          name="username"
-          component={RenderField}
-          placeholder="Shodyra"
-          type="text"
-        />
 
-        {error && <div className="form_error">{error}</div>}
-        <button
-          type="submit"
-          className="username_button"
-        >
-          Submit
-        </button>
+        <div className="username_bottom">
+          <Field
+            name="username"
+            component={RenderField}
+            placeholder="Shodyra"
+            type="text"
+          />
 
+          <button
+            type="submit"
+            className="username_button"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     );
   }

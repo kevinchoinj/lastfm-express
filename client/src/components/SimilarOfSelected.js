@@ -41,12 +41,12 @@ const TrackBlock = ({trackValues}) => {
 const TrackImage = ({trackImage, trackName}) => {
   if (trackImage.length>1) {
     return (
-      <img src={trackImage} className="current_image" alt={trackName}/>
+      <img src={trackImage} className="similar_image" alt={trackName}/>
     );
   }
   else {
     return (
-      <img src={placeholder} className="current_image" alt={trackName}/>
+      <img src={placeholder} className="similar_image" alt={trackName}/>
     );
   }
 }
@@ -66,7 +66,7 @@ class SimilarOfCurrent extends React.Component{
 
     return(
       <div className="grid_container">
-          <div className="current_inner">
+          <div className="similar_first">
             <div
               onClick={()=>this.closePanel()}
               className="grid_close"
