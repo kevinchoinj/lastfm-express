@@ -1,8 +1,8 @@
-export const TOGGLE_CURRENT_SIMILAR = Symbol('TOGGLE_CURRENT_SIMILAR');
+export const SET_CURRENT_PATH = Symbol('SET_CURRENT_PATH');
 
-export const toggleCurrentSimilar = (display) =>{
+export const setCurrentPath = (pathName) => {
     return{
-      type: TOGGLE_CURRENT_SIMILAR,
-      display
+      type: SET_CURRENT_PATH,
+      pathName
     };
 }

@@ -15,19 +15,19 @@ class ArtistOfCurrent extends React.Component{
     let artistSimilar = [];
     let artistTags = [];
 
+    if (currentArtist) {
+      artistName = currentArtist.name;
 
-    artistName = currentArtist.name;
+      if (currentArtist.bio) {
+        artistBio = currentArtist.bio.content;
+      }
+      if (currentArtist.image) {
+        artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
+      }
 
-    if (currentArtist.bio) {
-      artistBio = currentArtist.bio.content;
+      artistSimilar = currentArtist.similar;
+      artistTags = currentArtist.tags;
     }
-    if (currentArtist.image) {
-      artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
-    }
-
-    artistSimilar = currentArtist.similar;
-    artistTags = currentArtist.tags;
-
 
     return(
       <div className="artist_container">

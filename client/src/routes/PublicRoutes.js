@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {Switch, Route} from 'react-router-dom';
 
 import CurrentTrackPanel from 'components/CurrentTrackPanel';
 import SimilarOfCurrentPanel from 'components/SimilarOfCurrentPanel';
 import ArtistOfCurrentPanel from 'components/ArtistOfCurrentPanel';
+import SimilarOfSelectedPanel from 'components/SimilarOfSelectedPanel';
+
+import GetSimilarOfSelected from 'services/GetSimilarOfSelected';
 
 import Navbar from 'components/navbar/Navbar';
 
@@ -46,9 +50,11 @@ class SiteRoutes extends Component {
       loadedContent,
     } =this.props;
 
+    let currentPage = '';
+    currentPage = Object.keys(loadedContent).find(key => loadedContent[key] === true);
+
     return (
       <div>
-
         <CurrentTrackPanel/>
 
         {loadedContent[siteRoutes.home]?
@@ -56,6 +62,15 @@ class SiteRoutes extends Component {
         {loadedContent[siteRoutes.currentSimilar]?
         <SimilarOfCurrentPanel />:null}
 
+        {currentPage && currentPage.startsWith(siteRoutes.similar)?
+        <SimilarOfSelectedPanel />:null}
+
+        <Switch>
+          <Route exact path={siteRoutes.similar+"/:artist/:track"}
+          render={(props) =>(
+            <GetSimilarOfSelected {...props}/>
+          )}/>
+        </Switch>
         <Navbar/>
 
       </div>

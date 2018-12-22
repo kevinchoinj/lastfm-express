@@ -1,4 +1,5 @@
 export const siteRoutes = {
   home: "/",
-  currentSimilar: "/currentSimilar",
+  currentSimilar: "/current-similar",
+  similar: "/similar",
 };

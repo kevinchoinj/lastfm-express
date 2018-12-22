@@ -30,7 +30,6 @@ class Navbar extends React.Component{
           </Link>
         }
 
-        <br/>
         {loadedContent[siteRoutes.currentSimilar]?
           <div className="navbar_option">
             <FontAwesome name="music"/>
@@ -42,6 +41,37 @@ class Navbar extends React.Component{
             </div>
           </Link>
         }
+
+
+        {Object.entries(loadedContent).slice(2).map((value, key) => {
+          if (loadedContent[value[0]]) {
+            return (
+              <div className="navbar_option" key={key}>
+                <FontAwesome name="plus"/>
+              </div>
+            )
+          }
+          else {
+            return (
+              <div className="navbar_option__container" key={key}>
+                <Link to={value[0]}>
+                  <div className="navbar_option">
+                    <FontAwesome name="plus"/>
+                  </div>
+                </Link>
+                <div className="navbar_option__overlay" onClick={()=>console.log(value[0].split('/'))}>
+                  <div>
+                  <strong>{value[0].split('/')[2]}</strong>
+                  </div>
+                  <div>
+                  {value[0].split('/')[3]}
+                  </div>
+                </div>
+              </div>
+            )
+          }
+        })}
+
       </div>
 	  );
   }

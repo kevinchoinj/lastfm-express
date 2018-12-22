@@ -1,16 +1,16 @@
 import {
-  TOGGLE_CURRENT_SIMILAR,
+  SET_CURRENT_PATH,
 } from 'actions/panels'
 
 const DEFAULT_STATE={
-  currentSimilar: false,
+  currentPath: '',
 }
 
 export default(state=DEFAULT_STATE, payload)=>
 {
   switch(payload.type){
-    case TOGGLE_CURRENT_SIMILAR:
-      return state = {...state, currentSimilar: payload.display};
+    case SET_CURRENT_PATH:
+      return state = {...state, currentPath: payload.pathName};
     default:
       return state;
   }

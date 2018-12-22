@@ -8,3 +8,6 @@
 body {
   margin: 0px;
 }
+.scrollbar-track {
+  z-index: 0!important;
+}

@@ -1,12 +1,23 @@
+import {siteRoutes} from 'data/siteRoutes';
+
 import {
   START_TRANSITION,
   LOAD_CONTENT,
   PREVIOUS_PAGE_NAME,
+  REMOVE_PREVIOUS_CONTENT,
 } from 'actions/transition'
+
+const homeRoute = siteRoutes.home;
+const currentSimilarRoute = siteRoutes.currentSimilar;
+
+const defaultRoutes = {
+  [homeRoute]: false,
+  [currentSimilarRoute]: false,
+}
 
 const DEFAULT_STATE={
   transitionStatus: null,
-  loadedContent: [],
+  loadedContent: defaultRoutes,
   previousPage: '',
 }
 
@@ -30,7 +41,16 @@ export default(state=DEFAULT_STATE, payload)=>
         ...state,
         previousPage: payload.pageName,
       };
-
+    case REMOVE_PREVIOUS_CONTENT:
+      //console.log(Object.keys(state.loadedContent).filter(item => item !== payload.pageName).reduce((o, key) => Object.assign(o, {[key]: false}), {}));
+      //console.log('&&&&&&&&&&&&&');
+      /*
+      return {
+        ...state,
+        loadedContent: [Object.keys(state.loadedContent).filter(item => item !== payload.pageName)]
+        .reduce((o, key) => Object.assign(o, {[key]: false}), {}),
+      };
+      */
     default:
       return state;
   }

@@ -3,25 +3,29 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as lastfmActions from 'actions/lastfm';
 import placeholder from 'media/lastfm.png';
+import {Link} from 'react-router-dom';
+import {siteRoutes} from 'data/siteRoutes';
 
 const TrackBlock = ({trackValues}) => {
   let trackImage;
   let trackArtist;
   let trackName;
 
-  trackName = trackValues.trackName;
+  trackName = trackValues.name;
   if (trackValues.image) {
-    trackImage = trackValues.image[trackValues.image.length - 1]['#text'];
+    trackImage = trackValues.image[3]['#text'];
   }
   if (trackValues.artist) {
     trackArtist = trackValues.artist.name
   }
   return (
     <div className="current_inner">
-      <TrackImage
-        trackImage = {trackImage}
-        trackName = {trackName}
-      />
+      <Link to={siteRoutes.similar + '/' + trackArtist + '/' + trackName}>
+        <TrackImage
+          trackImage = {trackImage}
+          trackName = {trackName}
+        />
+      </Link>
       <div className="current_overlay">
         <strong>{trackArtist}</strong>
         <br/>
@@ -45,9 +49,6 @@ const TrackImage = ({trackImage, trackName}) => {
 }
 
 class SimilarOfCurrent extends React.Component{
-  getSimilarOfTrack = (trackName, trackArtist) => {
-    this.props.lastfmActions.requestSimilarTracks(trackName, trackArtist);
-  }
 
   render(){
     let {
@@ -58,10 +59,7 @@ class SimilarOfCurrent extends React.Component{
       <div className="grid_container">
         <strong>Similar of Current Track</strong>
           {currentSimilar && currentSimilar.length ? currentSimilar.map((value, key)=>(
-          <div
-            key={key}
-            onClick={()=>this.getSimilarOfTrack(value.name, value.artist.name)}
-          >
+          <div key={key}>
             <TrackBlock
               trackValues = {value}
             />
