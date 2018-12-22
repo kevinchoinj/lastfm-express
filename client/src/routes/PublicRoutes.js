@@ -32,13 +32,13 @@ class SiteRoutes extends Component {
 
       setTimeout(function(){
         this.props.transitionActions.startTransition("end");
-        this.props.transitionActions.loadContent(currentName, false);
+        if (this.props.loadedContent[currentName]){
+          this.props.transitionActions.loadContent(currentName, false);
+        }
         this.props.transitionActions.loadContent(nextName, true);
       }.bind(this), 400);
       setTimeout(function(){
         this.props.transitionActions.startTransition("reset");
-        this.props.transitionActions.loadContent(currentName, false);
-        this.props.transitionActions.loadContent(nextName, true);
       }.bind(this), 800);
     } else if (this.props.location === nextProps.location) {
     }
@@ -65,12 +65,10 @@ class SiteRoutes extends Component {
         {currentPage && currentPage.startsWith(siteRoutes.similar)?
         <SimilarOfSelectedPanel />:null}
 
-        <Switch>
           <Route exact path={siteRoutes.similar+"/:artist/:track"}
           render={(props) =>(
-            <GetSimilarOfSelected {...props}/>
+            <GetSimilarOfSelected {...props} key={props.match.params.artist + props.match.params.track}/>
           )}/>
-        </Switch>
         <Navbar/>
 
       </div>

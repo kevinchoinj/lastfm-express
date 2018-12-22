@@ -6,6 +6,8 @@ import * as transitionActions from 'actions/transition';
 import placeholder from 'media/lastfm.png';
 import {Link} from 'react-router-dom';
 import {siteRoutes} from 'data/siteRoutes';
+import {history} from 'store';
+import FontAwesome from 'react-fontawesome';
 
 const TrackBlock = ({trackValues}) => {
   let trackImage;
@@ -52,18 +54,30 @@ const TrackImage = ({trackImage, trackName}) => {
 class SimilarOfCurrent extends React.Component{
 
   closePanel = () => {
-    console.log("click");
-    this.props.transitionActions.removePreviousContent(this.props.currentPath);
+    this.props.transitionActions.removePreviousContent(siteRoutes.similar + '/' + this.props.currentPath.artist + '/' + this.props.currentPath.name);
+    history.push(siteRoutes.home);
   }
+
   render(){
     let {
       selectedSimilar,
+      currentPath,
     } = this.props;
 
     return(
       <div className="grid_container">
-          <div>
-            <div onClick={()=>this.closePanel()}>X</div>
+          <div className="current_inner">
+            <div
+              onClick={()=>this.closePanel()}
+              className="grid_close"
+            >
+              <FontAwesome name="times"/>
+            </div>
+            <div className="current_overlay">
+              <strong>{currentPath.artist}</strong>
+              <br/>
+              {currentPath.name}
+            </div>
           </div>
           {selectedSimilar && selectedSimilar.length ? selectedSimilar.map((value, key)=>(
           <div key={key}>

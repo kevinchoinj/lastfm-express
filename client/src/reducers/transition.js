@@ -42,15 +42,12 @@ export default(state=DEFAULT_STATE, payload)=>
         previousPage: payload.pageName,
       };
     case REMOVE_PREVIOUS_CONTENT:
-      //console.log(Object.keys(state.loadedContent).filter(item => item !== payload.pageName).reduce((o, key) => Object.assign(o, {[key]: false}), {}));
-      //console.log('&&&&&&&&&&&&&');
-      /*
-      return {
-        ...state,
-        loadedContent: [Object.keys(state.loadedContent).filter(item => item !== payload.pageName)]
-        .reduce((o, key) => Object.assign(o, {[key]: false}), {}),
-      };
-      */
+     let clone = Object.assign({}, state.loadedContent);
+     delete clone[payload.pageName];
+     return {
+      ...state,
+      loadedContent: clone
+    };
     default:
       return state;
   }

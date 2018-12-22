@@ -3,7 +3,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as lastfmActions from 'actions/lastfm';
 import * as panelsActions from 'actions/panels';
-import {siteRoutes} from 'data/siteRoutes';
 
 class GetSimilarOfSelected extends React.Component{
   componentDidMount(){
@@ -11,7 +10,10 @@ class GetSimilarOfSelected extends React.Component{
     let trackArtist = this.props.match.params.artist;
     this.props.lastfmActions.requestSimilarTracks(trackName, trackArtist);
 
-    this.props.panelsActions.setCurrentPath(siteRoutes.similar + '/' + trackArtist + '/' + trackName);
+    this.props.panelsActions.setCurrentPath({
+      artist: trackArtist,
+      name: trackName,
+    });
   }
 
   render(){
