@@ -9,10 +9,6 @@ class TestButton extends React.Component{
     this.props.lastfmActions.requestCurrentTrackThenSimilar();
   }
 
-  componentDidMount() {
-    this.props.lastfmActions.requestCurrentTrackThenSimilar();
-  }
-
   render(){
 
     let {

@@ -1,10 +1,9 @@
-import React from "react";
+import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as lastfmActions from 'actions/lastfm';
 
 class SimilarOfCurrent extends React.Component{
-
   getSimilarOfTrack = (trackName, trackArtist) => {
     this.props.lastfmActions.requestSimilarTracks(trackName, trackArtist);
   }
@@ -13,11 +12,11 @@ class SimilarOfCurrent extends React.Component{
     let {
       currentSimilar,
     } = this.props;
-	  return(
-			<div>
-        <br/><br/>
+
+    return(
+      <div className="grid_container">
         <strong>Similar of Current Track</strong>
-        {currentSimilar.length > 2 ? currentSimilar.map((value, key)=>(
+          {currentSimilar.length > 2 ? currentSimilar.map((value, key)=>(
           <div key={key} onClick={()=>this.getSimilarOfTrack(value.name, value.artist.name)}>
             {value.artist.name} - {value.name}
           </div>
@@ -25,7 +24,6 @@ class SimilarOfCurrent extends React.Component{
         ):
         <div> not enough similar tracks to current</div>}
       </div>
-
 	  );
   }
 }
@@ -38,4 +36,3 @@ export default connect(
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),
 )(SimilarOfCurrent);
-

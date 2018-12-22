@@ -1,0 +1,9 @@
+.page_wrapper {
+  width: calc(100vw - 60px);
+  position: relative;
+}
+@media screen and (max-width: 768px){
+  .page_wrapper {
+    width: 100vw;
+  }
+}

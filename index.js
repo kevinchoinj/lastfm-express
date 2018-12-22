@@ -38,7 +38,7 @@ app.post('/similar-tracks', urlencodedParser, (req, res) => {
   let reqBody = req.body;
   let trackName = reqBody.trackName;
   let trackArtist = reqBody.trackArtist;
-  fetch(LASTFM_ROOT +"/?method=track.getsimilar&limit=24&artist="+trackArtist+"&track="+trackName+"&api_key="+lastfmKey+"&format=json")
+  fetch(LASTFM_ROOT +"/?method=track.getsimilar&limit=40&artist="+trackArtist+"&track="+trackName+"&api_key="+lastfmKey+"&format=json")
     .then(res => res.json())
     .then(body => {
       res.json(body);
@@ -58,3 +58,4 @@ const port = process.env.PORT || 5000;
 server = app.listen(port, function(){
   console.log(`server is running on port ${port}`)
 })
+

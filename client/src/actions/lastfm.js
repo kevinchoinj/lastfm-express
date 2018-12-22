@@ -39,14 +39,17 @@ function fetchCurrentTrack() {
   }
 }
 export function requestCurrentTrack() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(requestCurrentTrackStarted());
     return dispatch(fetchCurrentTrack())
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
         let recentTrack = returnCurrentTrackData(json);
-        dispatch(requestCurrentTrackSucceeded(recentTrack));
+        //Check if currently stored track is the same as received track
+        if (getState().lastfm.currentTrack.name !== recentTrack.name) {
+          dispatch(requestCurrentTrackSucceeded(recentTrack));
+        }
       })
       .catch(error => dispatch(requestCurrentTrackFailure(error)));
     }
@@ -115,10 +118,13 @@ function returnSimilarTrackData (json) {
 =         SIMILAR TO CURRENT           =
 ======================================*/
 export function requestCurrentTrackThenSimilar() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     return dispatch(requestCurrentTrack())
       .then(function() {
-        dispatch(requestSimilarTrackOfCurrent())
+        //if currently stored track is not the same as received track, get new similar tracks
+        if (!getState().lastfm.currentTrackStarted) {
+          dispatch(requestSimilarTrackOfCurrent())
+        }
       })
     }
 }

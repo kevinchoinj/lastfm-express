@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import TestButton from 'components/TestButton';
-import SimilarOfCurrent from 'components/SimilarOfCurrent';
-import SimilarOfSelected from 'components/SimilarOfSelected';
+
+import GetCurrentTrack from 'services/GetCurrentTrack';
+
+import CurrentTrackPanel from 'components/CurrentTrackPanel';
+import SimilarOfCurrentPanel from 'components/SimilarOfCurrentPanel';
+
+import 'styles/main.css';
+import 'styles/grid.css';
+import 'styles/page.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <TestButton/>
-        <SimilarOfCurrent/>
-        <SimilarOfSelected/>
+        <div className="page_wrapper">
+          <GetCurrentTrack/>
+          <CurrentTrackPanel/>
+          <SimilarOfCurrentPanel/>
+        </div>
       </div>
     );
   }
