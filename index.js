@@ -34,6 +34,17 @@ app.get('/current-track', (req, res) => {
   );
 });
 
+app.post('/current-track', (req, res) => {
+  let reqBody = req.body;
+  let username = reqBody.username;
+  fetch(LASTFM_ROOT +"/?method=user.getrecenttracks&user="+username+"&api_key="+lastfmKey+"&limit=1&format=json")
+    .then(res => res.json())
+    .then(body => {
+      res.json(body);
+    }
+  );
+});
+
 app.post('/similar-tracks', urlencodedParser, (req, res) => {
   let reqBody = req.body;
   let trackName = reqBody.trackName;

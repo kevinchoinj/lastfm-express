@@ -1,4 +1,6 @@
 import {
+  UPDATE_USERNAME,
+
   REQUEST_CURRENT_TRACK_STARTED,
   REQUEST_CURRENT_TRACK_SUCCEEDED,
   REQUEST_CURRENT_TRACK_FAILURE,
@@ -13,8 +15,12 @@ import {
 } from 'actions/lastfm'
 
 const DEFAULT_STATE={
+
+  currentUser: 'Shodyra',
+
   currentTrackStarted: false,
   currentTrack : {},
+
   currentSimilar: {},
   currentArtist: {},
 
@@ -24,11 +30,13 @@ const DEFAULT_STATE={
 
 export default(state=DEFAULT_STATE, payload) => {
   switch(payload.type){
+    case UPDATE_USERNAME:
+      return state = {...state, currentUser: payload.payload};
     case REQUEST_CURRENT_TRACK_STARTED:
-    return {
-      ...state,
-      currentTrackStarted: true,
-    };
+      return {
+        ...state,
+        currentTrackStarted: true,
+      };
     case REQUEST_CURRENT_TRACK_SUCCEEDED:
       return {
         ...state,

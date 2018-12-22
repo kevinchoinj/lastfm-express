@@ -135,19 +135,43 @@
 =               ARTIST                 =
 ======================================*/
 .artist_image {
+  width: 100%;
+}
+.artist_container {
+  font-size: 13px;
+  color: #dcddde;
+  display: flex;
+  width: 100%;
+}
+.artist_container a{
+  color: #999;
+  text-decoration: none;
+}
+.artist_left {
   width: 14.2857142857%;
 }
+.artist_right {
+  width: 85.7142857143%;
+  padding: 14px;
+  box-sizing: border-box;
+}
+.artist_left__block {
+  padding: 14px 0px;
+}
 @media screen and (max-width: 1200px){
-  .artist_image {
-    width: 25%;
+  .artist_left {
+    width: 28.74%;
   }
 }
 @media screen and (max-width: 768px){
-  .artist_image {
+  .artist_container {
+    flex-direction: column;
+  }
+  .artist_left,
+  .artist_right {
     width: 100%;
   }
 }
-
 /*======================================
 =               BUTTONS                 =
 ======================================*/
@@ -164,6 +188,15 @@
   -o-transition: .3s ease-out;
   transition: .3s ease-out;
 }
-.grid_close:hover {
+.grid_close a {
+  text-decoration: none;
+  -webkit-transition: .3s ease-out;
+  -moz-transition: .3s ease-out;
+  -o-transition: .3s ease-out;
+  transition: .3s ease-out;
+  color: #999;
+}
+.grid_close:hover,
+.grid_close a:hover {
   color: #fff;
 }

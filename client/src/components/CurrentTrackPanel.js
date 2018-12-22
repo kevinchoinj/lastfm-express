@@ -1,6 +1,9 @@
 import React from "react";
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import * as lastfmActions from 'actions/lastfm';
 import placeholder from 'media/lastfm.png';
+import UsernameForm from 'components/forms/UsernameForm';
 
 const CurrentImage = ({image, name}) => {
   if (image.length>1){
@@ -16,6 +19,10 @@ const CurrentImage = ({image, name}) => {
 }
 
 class CurrentTrackPanel extends React.Component{
+
+  updateUsername = values => {
+    this.props.lastfmActions.updateUsernameThenUpdate(values);
+  }
 
   render(){
     let {
@@ -55,6 +62,9 @@ class CurrentTrackPanel extends React.Component{
             </div>
           }
         </div>
+        <div className="current_username__container">
+          <UsernameForm onSubmit={this.updateUsername}/>
+        </div>
       </div>
 	  );
   }
@@ -65,6 +75,7 @@ export default connect(
     currentTrack: state.lastfm.currentTrack,
   }),
   dispatch => ({
+    lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),
 )(CurrentTrackPanel);
 

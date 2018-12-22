@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Switch, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import CurrentTrackPanel from 'components/CurrentTrackPanel';
 import SimilarOfCurrentPanel from 'components/SimilarOfCurrentPanel';

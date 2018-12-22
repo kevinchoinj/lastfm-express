@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 
 class ArtistOfCurrent extends React.Component{
 
+  createMarkup = (text) => {
+    return {__html: text};
+  }
+
   render(){
 
     let {
@@ -17,36 +21,54 @@ class ArtistOfCurrent extends React.Component{
 
     if (currentArtist) {
       artistName = currentArtist.name;
-
       if (currentArtist.bio) {
         artistBio = currentArtist.bio.content;
       }
       if (currentArtist.image) {
         artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
       }
-
-      artistSimilar = currentArtist.similar;
-      artistTags = currentArtist.tags;
+      if (currentArtist.similar) {
+        artistSimilar = currentArtist.similar.artist;
+      }
+      if (currentArtist.tags) {
+        artistTags = currentArtist.tags.tag;
+      }
     }
 
     return(
       <div className="artist_container">
-        <img src={artistImage} className="artist_image" alt={artistName} />
-        {artistName}
-        {artistBio}
-        <br/><br/>
-        {artistSimilar && artistSimilar.length? artistSimilar.map((value, key) =>
-          <div key={key}>
-            {value.name}
+        <div className="artist_left">
+          <img src={artistImage} className="artist_image" alt={artistName} />
+          <div>
+            <strong>
+            {artistName}
+            </strong>
           </div>
-        )
-        :null}
-        {artistTags && artistTags.length? artistTags.map((value, key) =>
-          <div key={key}>
-            {value.name}
+          <div className="artist_left__block">
+            <strong>Similar Artists</strong>
+            {artistSimilar && artistSimilar.length? artistSimilar.map((value, key) =>
+              <div key={key}>
+                {value.name}
+              </div>
+            )
+            :null}
           </div>
-        )
-        :null}
+          <div className="artist_left__block">
+            <strong>Tags</strong>
+            {artistTags && artistTags.length? artistTags.map((value, key) =>
+              <div key={key}>
+                {value.name}
+              </div>
+            )
+            :null}
+          </div>
+        </div>
+        <div className="artist_right">
+          <div>
+            <div dangerouslySetInnerHTML={this.createMarkup(artistBio)} />
+          </div>
+
+        </div>
       </div>
 	  );
   }

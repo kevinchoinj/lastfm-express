@@ -5,6 +5,7 @@ import * as lastfmActions from 'actions/lastfm';
 import placeholder from 'media/lastfm.png';
 import {Link} from 'react-router-dom';
 import {siteRoutes} from 'data/siteRoutes';
+import FontAwesome from 'react-fontawesome';
 
 const TrackBlock = ({trackValues}) => {
   let trackImage;
@@ -53,12 +54,33 @@ class SimilarOfCurrent extends React.Component{
   render(){
     let {
       currentSimilar,
+      currentTrack,
     } = this.props;
 
+    let artist;
+    let name;
+
+    name = currentTrack.name;
+    if (currentTrack.artist) {
+      artist = currentTrack.artist["#text"];
+    }
     return(
       <div className="grid_container">
-        <strong>Similar of Current Track</strong>
-          {currentSimilar && currentSimilar.length ? currentSimilar.map((value, key)=>(
+        <div className="current_inner">
+          <div
+            className="grid_close"
+          >
+            <Link to={siteRoutes.home}>
+              <FontAwesome name="times"/>
+            </Link>
+          </div>
+          <div className="current_overlay">
+            <strong>{artist}</strong>
+            <br/>
+            {name}
+          </div>
+        </div>
+        {currentSimilar && currentSimilar.length ? currentSimilar.map((value, key)=>(
           <div key={key}>
             <TrackBlock
               trackValues = {value}
@@ -75,6 +97,7 @@ class SimilarOfCurrent extends React.Component{
 export default connect(
   (state, ownProps) => ({
     currentSimilar: state.lastfm.currentSimilar,
+    currentTrack: state.lastfm.currentTrack,
   }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),

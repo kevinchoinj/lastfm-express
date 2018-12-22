@@ -1,3 +1,5 @@
+export const UPDATE_USERNAME = Symbol('UPDATE_USERNAME');
+
 export const REQUEST_CURRENT_TRACK_STARTED = Symbol('REQUEST_CURRENT_TRACK_STARTED');
 export const REQUEST_CURRENT_TRACK_SUCCEEDED = Symbol('REQUEST_CURRENT_TRACK_SUCCEEDED');
 export const REQUEST_CURRENT_TRACK_FAILURE = Symbol('REQUEST_CURRENT_TRACK_FAILURE');
@@ -45,19 +47,50 @@ function handleErrors(response) {
   return response;
 }
 
+/*======================================
+=          UPDATE USERNAME            =
+======================================*/
+export const updateUsername = (values) => {
+    return {
+      type: UPDATE_USERNAME,
+      payload: values.username,
+    };
+}
+
+export const updateUsernameThenUpdate = (values) => {
+  return (dispatch) => {
+    dispatch(updateUsername(values));
+    dispatch(requestCurrentTrackThenArtistSimilar());
+  };
+}
 
 /*======================================
 =           CURRENT TRACK             =
 ======================================*/
-function fetchCurrentTrack() {
+function fetchCurrentTrack(username) {
   return () => {
-    return fetch('/current-track');
+    return fetch('/current-track',
+    {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+      })
+    })
   }
 }
+function fetchCurrentTrackWithUsername() {
+  return (dispatch, getState) => {
+    return dispatch(fetchCurrentTrack(getState().lastfm.currentUser));
+  }
+}
+
 export function requestCurrentTrack() {
   return (dispatch, getState) => {
     dispatch(requestCurrentTrackStarted());
-    return dispatch(fetchCurrentTrack())
+    return dispatch(fetchCurrentTrackWithUsername())
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

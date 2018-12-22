@@ -1,0 +1,40 @@
+.username_form {
+  margin: 28px 0px;
+  padding: 0px 14px;
+  box-sizing: border-box;
+}
+
+.username_label {
+  font-size: 13px;
+  color: #dcddde;
+}
+
+.username_input {
+  width: 100%;
+  line-height: 22px;
+  font-size: 13px;
+  box-sizing: border-box;
+  display: flex;
+  border: 0px;
+  padding: 7px;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+}
+
+.username_button {
+  width: 100%;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  margin: 4px 0px;
+  padding: 7px;
+  cursor: pointer;
+  -webkit-transition: .3s ease-out;
+  -moz-transition: .3s ease-out;
+  -o-transition: .3s ease-out;
+  transition: .3s ease-out;
+  font-size: 13px;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+}
+.username_button:hover {
+ background-color: #000;
+}

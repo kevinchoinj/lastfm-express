@@ -8,6 +8,7 @@ import 'styles/main.css';
 import 'styles/grid.css';
 import 'styles/page.css';
 import 'styles/navbar.css';
+import 'styles/form.css';
 
 class App extends Component {
   render() {
