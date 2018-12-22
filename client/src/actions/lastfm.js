@@ -76,7 +76,7 @@ function fetchCurrentTrack(username) {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
+        username: encodeURIComponent(username),
       })
     })
   }
@@ -122,8 +122,8 @@ function fetchSimilarTracks(trackName, trackArtist) {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        trackName: trackName,
-        trackArtist: trackArtist,
+        trackName: encodeURIComponent(trackName),
+        trackArtist: encodeURIComponent(trackArtist),
       })
     })
   }
@@ -174,7 +174,7 @@ function fetchArtist(trackArtist) {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        trackArtist: trackArtist,
+        trackArtist: encodeURIComponent(trackArtist),
       })
     })
   }

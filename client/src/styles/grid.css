@@ -71,9 +71,6 @@
   font-size: 12px;
   box-sizing: border-box;
 }
-.current_inner:hover .current_image {
-  transform: scale(1.05, 1.05);
-}
 @media screen and (max-width: 768px){
   .current_container {
     height: 100%;
@@ -165,6 +162,9 @@
   -o-transition: .3s ease-out;
   transition: .3s ease-out;
   object-fit: cover;
+}
+.current_inner:hover .similar_image {
+  transform: scale(1.05, 1.05);
 }
 .similar_first {
   width: 100%;
