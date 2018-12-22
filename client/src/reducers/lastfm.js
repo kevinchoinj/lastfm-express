@@ -7,6 +7,8 @@ import {
   REQUEST_SIMILAR_TRACKS_SUCCEEDED,
 
   REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED,
+  REQUEST_CURRENT_TRACK_ARTIST_FAILURE,
+
   REQUEST_ARTIST_INFO_SUCCEEDED,
 } from 'actions/lastfm'
 
@@ -49,12 +51,18 @@ export default(state=DEFAULT_STATE, payload) => {
         selectedSimilar: payload.data,
       };
 
-      case REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED:
+    case REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED:
       return {
         ...state,
         currentArtist: payload.data,
       };
-      case REQUEST_ARTIST_INFO_SUCCEEDED:
+    case REQUEST_CURRENT_TRACK_ARTIST_FAILURE:
+      return {
+        ...state,
+        currentArtist: {},
+      };
+
+    case REQUEST_ARTIST_INFO_SUCCEEDED:
       return {
         ...state,
         selectedArtist: payload.data,
