@@ -46,6 +46,16 @@ app.post('/similar-tracks', urlencodedParser, (req, res) => {
   );
 });
 
+app.post('/artist-info', urlencodedParser, (req, res) => {
+  let reqBody = req.body;
+  let trackArtist = reqBody.trackArtist;
+  fetch(LASTFM_ROOT +"/?method=artist.getinfo&artist="+trackArtist+"&api_key="+lastfmKey+"&format=json")
+    .then(res => res.json())
+    .then(body => {
+      res.json(body);
+    }
+  );
+});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

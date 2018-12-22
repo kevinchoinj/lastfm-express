@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import {Route, Switch} from 'react-router-dom';
 
 import GetCurrentTrack from 'services/GetCurrentTrack';
-
-import CurrentTrackPanel from 'components/CurrentTrackPanel';
-import SimilarOfCurrentPanel from 'components/SimilarOfCurrentPanel';
+import PublicRoutes from 'routes/PublicRoutes';
 
 import 'styles/main.css';
 import 'styles/grid.css';
 import 'styles/page.css';
+import 'styles/navbar.css';
 
 class App extends Component {
   render() {
@@ -15,8 +15,9 @@ class App extends Component {
       <div className="App">
         <div className="page_wrapper">
           <GetCurrentTrack/>
-          <CurrentTrackPanel/>
-          <SimilarOfCurrentPanel/>
+          <Switch>
+            <Route path="/" component={PublicRoutes}/>
+          </Switch>
         </div>
       </div>
     );

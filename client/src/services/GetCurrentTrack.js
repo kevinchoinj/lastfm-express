@@ -5,10 +5,10 @@ import * as lastfmActions from 'actions/lastfm';
 
 class GetCurrentTrack extends React.Component{
   componentDidMount(){
-    this.props.lastfmActions.requestCurrentTrackThenSimilar();
+    this.props.lastfmActions.requestCurrentTrackThenArtistSimilar();
 
     setInterval(function() {
-      this.props.lastfmActions.requestCurrentTrackThenSimilar();
+      this.props.lastfmActions.requestCurrentTrackThenArtistSimilar();
     }.bind(this), 4000);
 
   }

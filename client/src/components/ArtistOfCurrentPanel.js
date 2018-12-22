@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Scrollbar from 'smooth-scrollbar';
-import SimilarOfCurrent from 'components/SimilarOfCurrent';
+import ArtistOfCurrent from 'components/ArtistOfCurrent';
 import classNames from 'classnames';
 
-class SimilarOfCurrentPanel extends React.Component{
+class ArtistOfCurrentPanel extends React.Component{
   componentDidMount() {
 		Scrollbar.init(document.querySelector('#current_similar_panel'), {
 			alwaysShowTracks: true,
@@ -28,7 +28,7 @@ class SimilarOfCurrentPanel extends React.Component{
     return(
         <div className={panelName}>
           <div className="similar_current__content" id="current_similar_panel">
-            <SimilarOfCurrent/>
+            <ArtistOfCurrent/>
           </div>
         </div>
 	  );
@@ -41,4 +41,4 @@ export default connect(
   }),
   dispatch => ({
   }),
-)(SimilarOfCurrentPanel);
+)(ArtistOfCurrentPanel);

@@ -1,0 +1,12 @@
+.navbar_wrapper {
+  width: 60px;
+  height: 100vh;
+  background-color: #000;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+}
+.navbar_wrapper a {
+  text-decoration: none;
+  color: #fff;
+}

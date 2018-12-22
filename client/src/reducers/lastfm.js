@@ -2,15 +2,22 @@ import {
   REQUEST_CURRENT_TRACK_STARTED,
   REQUEST_CURRENT_TRACK_SUCCEEDED,
   REQUEST_CURRENT_TRACK_FAILURE,
+
   REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED,
   REQUEST_SIMILAR_TRACKS_SUCCEEDED,
+
+  REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED,
+  REQUEST_ARTIST_INFO_SUCCEEDED,
 } from 'actions/lastfm'
 
 const DEFAULT_STATE={
   currentTrackStarted: false,
   currentTrack : {},
   currentSimilar: {},
+  currentArtist: {},
+
   selectedSimilar: {},
+  selectedArtist: {},
 }
 
 export default(state=DEFAULT_STATE, payload) => {
@@ -40,6 +47,17 @@ export default(state=DEFAULT_STATE, payload) => {
       return {
         ...state,
         selectedSimilar: payload.data,
+      };
+
+      case REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED:
+      return {
+        ...state,
+        currentArtist: payload.data,
+      };
+      case REQUEST_ARTIST_INFO_SUCCEEDED:
+      return {
+        ...state,
+        selectedArtist: payload.data,
       };
    default:
       return state;
