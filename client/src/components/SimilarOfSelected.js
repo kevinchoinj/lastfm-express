@@ -19,11 +19,12 @@ const TrackBlock = ({trackValues}) => {
     trackImage = trackValues.image[3]['#text'];
   }
   if (trackValues.artist) {
-    trackArtist = trackValues.artist.name
+    trackArtist = trackValues.artist.name;
   }
+
   return (
     <div className="current_inner">
-      <Link to={siteRoutes.similar + '/' + trackArtist + '/' + trackName}>
+      <Link to={siteRoutes.similar + '/' + encodeURIComponent(trackArtist) + '/' + encodeURIComponent(trackName)}>
         <TrackImage
           trackImage = {trackImage}
           trackName = {trackName}

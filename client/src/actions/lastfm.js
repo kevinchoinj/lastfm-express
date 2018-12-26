@@ -128,8 +128,8 @@ function fetchSimilarTracks(trackName, trackArtist) {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        trackName: encodeURIComponent(trackName),
-        trackArtist: encodeURIComponent(trackArtist),
+        trackName: trackName,
+        trackArtist: trackArtist,
       })
     })
   }

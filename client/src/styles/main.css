@@ -11,3 +11,22 @@ body {
 .scrollbar-track {
   z-index: 0!important;
 }
+
+.notfound_wrapper {
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  flex-direction: column;
+}
+.notfound_title {
+  font-size: 5.9vw;
+}
+.notfound_text{
+  font-size: 20px;
+}

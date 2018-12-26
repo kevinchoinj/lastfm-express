@@ -22,9 +22,7 @@ const RenderField = ({
 
 class UsernameForm extends React.Component {
   render() {
-    const { handleSubmit,
-      error,
-    } = this.props;
+    const { handleSubmit} = this.props;
 
     return (
       <form onSubmit={handleSubmit} autoComplete="off" className="username_form">
@@ -40,7 +38,6 @@ class UsernameForm extends React.Component {
             placeholder="Shodyra"
             type="text"
           />
-
           <button
             type="submit"
             className="username_button"

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './App';
 
 import {Provider} from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router'  ;
 import Store, { history } from './store';
 
 const StoreInstance = Store();

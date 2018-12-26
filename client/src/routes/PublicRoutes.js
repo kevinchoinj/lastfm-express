@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
+import {siteRoutes} from 'data/siteRoutes';
+import * as transitionActions from 'actions/transition';
 
+/* Pages */
 import CurrentTrackPanel from 'components/CurrentTrackPanel';
 import SimilarOfCurrentPanel from 'components/SimilarOfCurrentPanel';
 import ArtistOfCurrentPanel from 'components/ArtistOfCurrentPanel';
 import SimilarOfSelectedPanel from 'components/SimilarOfSelectedPanel';
+import NotFound from 'pages/NotFound';
 
+/* Services */
 import GetSimilarOfSelected from 'services/GetSimilarOfSelected';
 
+/* Components */
 import Navbar from 'components/navbar/Navbar';
-
-import {siteRoutes} from 'data/siteRoutes';
-
-import * as transitionActions from 'actions/transition';
+import Background from 'components/Background';
 
 class SiteRoutes extends Component {
 
@@ -57,6 +60,8 @@ class SiteRoutes extends Component {
       <div>
         <CurrentTrackPanel/>
 
+        <Background/>
+
         {loadedContent[siteRoutes.home]?
         <ArtistOfCurrentPanel />:null}
         {loadedContent[siteRoutes.currentSimilar]?
@@ -65,10 +70,17 @@ class SiteRoutes extends Component {
         {currentPage && currentPage.startsWith(siteRoutes.similar)?
         <SimilarOfSelectedPanel />:null}
 
+        <Switch>
+          <Route exact path={siteRoutes.home}
+            render={null}/>
+          <Route exact path={siteRoutes.currentSimilar}
+            render={null}/>
           <Route exact path={siteRoutes.similar+"/:artist/:track"}
-          render={(props) =>(
-            <GetSimilarOfSelected {...props} key={props.match.params.artist + props.match.params.track}/>
+            render={(props) =>(
+              <GetSimilarOfSelected {...props} key={props.match.params.artist + props.match.params.track}/>
           )}/>
+          <Route component={NotFound} />
+        </Switch>
         <Navbar/>
 
       </div>
