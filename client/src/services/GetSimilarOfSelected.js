@@ -8,7 +8,7 @@ class GetSimilarOfSelected extends React.Component{
   componentDidMount(){
     let trackName = this.props.match.params.track;
     let trackArtist = this.props.match.params.artist;
-    this.props.lastfmActions.requestSimilarTracks(trackName, trackArtist);
+    this.props.lastfmActions.requestSimilarTrackIfNoData(trackName, trackArtist);
 
     this.props.panelsActions.setCurrentPath({
       artist: trackArtist,

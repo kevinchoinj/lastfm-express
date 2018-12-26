@@ -12,13 +12,13 @@ export const REQUEST_CURRENT_TRACK_ARTIST_STARTED = Symbol('REQUEST_CURRENT_TRAC
 export const REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED = Symbol('REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED');
 export const REQUEST_CURRENT_TRACK_ARTIST_FAILURE = Symbol('REQUEST_CURRENT_TRACK_ARTIST_FAILURE');
 
-export const REQUEST_SIMILAR_TRACKS_STARTED = Symbol('REQUEST_SIMILAR_TRACKS_STARTED');
-export const REQUEST_SIMILAR_TRACKS_SUCCEEDED = Symbol('REQUEST_SIMILAR_TRACKS_SUCCEEDED');
-export const REQUEST_SIMILAR_TRACKS_FAILURE = Symbol('REQUEST_SIMILAR_TRACKS_FAILURE');
-
 export const REQUEST_ARTIST_INFO_STARTED = Symbol('REQUEST_ARTIST_INFO_STARTED');
 export const REQUEST_ARTIST_INFO_SUCCEEDED = Symbol('REQUEST_ARTIST_INFO_SUCCEEDED');
 export const REQUEST_ARTIST_INFO_FAILURE = Symbol('REQUEST_ARTIST_INFO_FAILURE');
+
+export const REQUEST_SIMILAR_TRACK_STARTED = Symbol('REQUEST_SIMILAR_TRACK_STARTED');
+export const REQUEST_SIMILAR_TRACK_SUCCEEDED = Symbol('REQUEST_SIMILAR_TRACK_SUCCEEDED');
+export const REQUEST_SIMILAR_TRACK_FAILURE = Symbol('REQUEST_SIMILAR_TRACK_FAILURE');
 
 const requestCurrentTrackStarted = request => ({type: REQUEST_CURRENT_TRACK_STARTED, request});
 const requestCurrentTrackSucceeded = data => ({type: REQUEST_CURRENT_TRACK_SUCCEEDED, data});
@@ -32,13 +32,18 @@ const requestCurrentTrackArtistStarted = request => ({type: REQUEST_CURRENT_TRAC
 const requestCurrentTrackArtistSucceeded = data => ({type: REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED, data});
 const requestCurrentTrackArtistFailure = (data, error) => ({type: REQUEST_CURRENT_TRACK_ARTIST_FAILURE, data, error});
 
-const requestSimilarTracksStarted = request => ({type: REQUEST_SIMILAR_TRACKS_STARTED, request});
-const requestSimilarTracksSucceeded = data => ({type: REQUEST_SIMILAR_TRACKS_SUCCEEDED, data});
-const requestSimilarTracksFailure = (data, error) => ({type: REQUEST_SIMILAR_TRACKS_FAILURE, data, error});
-
 const requestArtistInfoStarted = request => ({type: REQUEST_ARTIST_INFO_STARTED, request});
 const requestArtistInfoSucceeded = data => ({type: REQUEST_ARTIST_INFO_SUCCEEDED, data});
 const requestArtistInfoFailure = (data, error) => ({type: REQUEST_ARTIST_INFO_FAILURE, data, error});
+
+const requestSimilarTrackStarted = request => ({type: REQUEST_SIMILAR_TRACK_STARTED, request});
+const requestSimilarTrackSucceeded = (trackName, trackArtist, data) => ({
+  type: REQUEST_SIMILAR_TRACK_SUCCEEDED,
+  trackName,
+  trackArtist,
+  data
+  });
+const requestSimilarTrackFailure = (data, error) => ({type: REQUEST_SIMILAR_TRACK_FAILURE, data, error});
 
 function handleErrors(response) {
   if (!response.ok) {
@@ -103,6 +108,7 @@ export function requestCurrentTrack() {
       .catch(error => dispatch(requestCurrentTrackFailure(error)));
     }
 }
+
 function returnCurrentTrackData (json) {
   let recentTrack;
   recentTrack = json.recenttracks.track[0];
@@ -144,18 +150,26 @@ export function requestSimilarTrackOfCurrent () {
     .catch(error => dispatch(requestCurrentTrackSimilarFailure(error)));
   }
 }
-export function requestSimilarTracks(trackName, trackArtist) {
+
+export function requestSimilarTrack(trackName, trackArtist) {
   return dispatch => {
-    dispatch(requestSimilarTracksStarted());
+    dispatch(requestSimilarTrackStarted());
     return dispatch(fetchSimilarTracks(trackName, trackArtist))
     .then(handleErrors)
     .then(res => res.json())
     .then(json => {
-      let similarTracks = returnSimilarTrackData(json);
-      dispatch(requestSimilarTracksSucceeded(similarTracks));
+      let similarTrack = returnSimilarTrackData(json);
+      dispatch(requestSimilarTrackSucceeded(trackName, trackArtist, similarTrack));
     })
-    .catch(error => dispatch(requestSimilarTracksFailure(error)));
+    .catch(error => dispatch(requestSimilarTrackFailure(error)));
     }
+}
+export function requestSimilarTrackIfNoData(trackName, trackArtist) {
+  return (dispatch, getState) => {
+    if (!getState().lastfm.similarTracks[trackArtist+'-'+trackName]) {
+      dispatch(requestSimilarTrack(trackName, trackArtist));
+    }
+  }
 }
 function returnSimilarTrackData (json) {
   let similarTracks;

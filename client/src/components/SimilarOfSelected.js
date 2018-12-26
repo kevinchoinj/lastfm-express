@@ -60,10 +60,11 @@ class SimilarOfCurrent extends React.Component{
 
   render(){
     let {
-      selectedSimilar,
+      similarTracks,
       currentPath,
     } = this.props;
 
+    let selectedSimilar = similarTracks[this.props.currentPath.artist+'-'+this.props.currentPath.name]
     return(
       <div className="grid_container">
           <div className="similar_first">
@@ -95,7 +96,7 @@ class SimilarOfCurrent extends React.Component{
 
 export default connect(
   (state, ownProps) => ({
-    selectedSimilar: state.lastfm.selectedSimilar,
+    similarTracks: state.lastfm.similarTracks,
     currentPath: state.panels.currentPath,
   }),
   dispatch => ({
