@@ -34,7 +34,7 @@ const TrackBlock = ({trackValues}) => {
       </div>
     </div>
   );
-}
+};
 
 const TrackImage = ({trackImage, trackName}) => {
   if (trackImage.length>1) {
@@ -47,7 +47,7 @@ const TrackImage = ({trackImage, trackName}) => {
       <img src={placeholder} className="similar_image" alt={trackName}/>
     );
   }
-}
+};
 
 class SimilarOfCurrent extends React.Component{
 
@@ -62,7 +62,7 @@ class SimilarOfCurrent extends React.Component{
 
     name = currentTrack.name;
     if (currentTrack.artist) {
-      artist = currentTrack.artist["#text"];
+      artist = currentTrack.artist['#text'];
     }
     return(
       <div className="grid_container">
@@ -75,7 +75,9 @@ class SimilarOfCurrent extends React.Component{
             </Link>
           </div>
           <div className="current_overlay">
-            <strong>{artist}</strong>
+            <strong>
+              {artist}
+            </strong>
             <br/>
             {name}
           </div>
@@ -86,16 +88,16 @@ class SimilarOfCurrent extends React.Component{
               trackValues = {value}
             />
           </div>
-          )
+        )
         ):
-        <div> not enough similar tracks to current</div>}
+          <div className="warning_message"> No Similar Tracks Found </div>}
       </div>
-	  );
+    );
   }
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     currentSimilar: state.lastfm.currentSimilar,
     currentTrack: state.lastfm.currentTrack,
   }),

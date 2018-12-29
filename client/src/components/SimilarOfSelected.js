@@ -37,7 +37,7 @@ const TrackBlock = ({trackValues}) => {
       </div>
     </div>
   );
-}
+};
 
 const TrackImage = ({trackImage, trackName}) => {
   if (trackImage.length>1) {
@@ -50,7 +50,7 @@ const TrackImage = ({trackImage, trackName}) => {
       <img src={placeholder} className="similar_image" alt={trackName}/>
     );
   }
-}
+};
 
 class SimilarOfCurrent extends React.Component{
 
@@ -65,38 +65,41 @@ class SimilarOfCurrent extends React.Component{
       currentPath,
     } = this.props;
 
-    let selectedSimilar = similarTracks[this.props.currentPath.artist+'-'+this.props.currentPath.name]
+    let selectedSimilar = similarTracks[this.props.currentPath.artist+'-'+this.props.currentPath.name];
+
     return(
       <div className="grid_container">
-          <div className="similar_first">
-            <div
-              onClick={()=>this.closePanel()}
-              className="grid_close"
-            >
-              <FontAwesome name="times"/>
-            </div>
-            <div className="current_overlay">
-              <strong>{currentPath.artist}</strong>
-              <br/>
-              {currentPath.name}
-            </div>
+        <div className="similar_first">
+          <div
+            onClick={()=>this.closePanel()}
+            className="grid_close"
+          >
+            <FontAwesome name="times"/>
           </div>
-          {selectedSimilar && selectedSimilar.length ? selectedSimilar.map((value, key)=>(
+          <div className="current_overlay">
+            <strong>{currentPath.artist}</strong>
+            <br/>
+            {currentPath.name}
+          </div>
+        </div>
+        {selectedSimilar && selectedSimilar.length ? selectedSimilar.map((value, key)=>(
           <div key={key}>
             <TrackBlock
               trackValues = {value}
             />
           </div>
-          )
+        )
         ):
-        <div> not enough similar tracks to current</div>}
+          <div className="warning_message"> No Similar Tracks Found </div>
+        }
+      }
       </div>
-	  );
+    );
   }
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     similarTracks: state.lastfm.similarTracks,
     currentPath: state.panels.currentPath,
   }),

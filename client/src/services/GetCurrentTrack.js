@@ -17,7 +17,7 @@ class GetCurrentTrack extends React.Component{
   }
 }
 export default connect(
-  (state, ownProps) => ({
+  () => ({
   }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch)}),

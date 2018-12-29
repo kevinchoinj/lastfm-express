@@ -18,7 +18,7 @@ const RenderField = ({
       ((error && <span className="form_error">{error}</span>) ||
         (warning && <span className="form_error">{warning}</span>))}
   </div>
-)
+);
 
 class UsernameForm extends React.Component {
   render() {
@@ -50,24 +50,24 @@ class UsernameForm extends React.Component {
   }
 }
 
-function mapStateToProps(state, prop){
+function mapStateToProps(){
   return{
     initialValues: {
     },
-  }
+  };
 }
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(){
   return {
-  }
+  };
 }
 
 const afterSubmit = (result, dispatch) =>
   dispatch(reset('adminBasic'));
 
-UsernameForm = reduxForm({
-  form: 'adminBasic',
-  enableReinitialize: true,
-  onSubmitSuccess: afterSubmit,
-})(UsernameForm);
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsernameForm);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  reduxForm({
+    form: 'adminBasic',
+    enableReinitialize: true,
+    onSubmitSuccess: afterSubmit,
+  })(UsernameForm)
+);

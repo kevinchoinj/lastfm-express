@@ -13,7 +13,7 @@ import {
   REQUEST_SIMILAR_TRACK_SUCCEEDED,
 
   REQUEST_ARTIST_INFO_SUCCEEDED,
-} from 'actions/lastfm'
+} from 'actions/lastfm';
 
 const DEFAULT_STATE={
 
@@ -28,60 +28,60 @@ const DEFAULT_STATE={
   selectedArtist: {},
 
   similarTracks: {},
-}
+};
 
 export default(state=DEFAULT_STATE, payload) => {
   switch(payload.type){
-    case UPDATE_USERNAME:
-      return state = {...state, currentUser: payload.payload};
-    case REQUEST_CURRENT_TRACK_STARTED:
-      return {
-        ...state,
-        currentTrackStarted: true,
-      };
-    case REQUEST_CURRENT_TRACK_SUCCEEDED:
-      return {
-        ...state,
-        currentTrack: payload.data,
-        currentTrackStarted: false,
-      };
-    case REQUEST_CURRENT_TRACK_FAILURE:
-      return {
-        ...state,
-        currentTrackStarted: false,
-      };
-    case REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED:
-      return {
-        ...state,
-        currentSimilar: payload.data,
-      };
-
-    case REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED:
-      return {
-        ...state,
-        currentArtist: payload.data,
-      };
-    case REQUEST_CURRENT_TRACK_ARTIST_FAILURE:
-      return {
-        ...state,
-        currentArtist: {},
-      };
-
-    case REQUEST_ARTIST_INFO_SUCCEEDED:
-      return {
-        ...state,
-        selectedArtist: payload.data,
-      };
-
-      case REQUEST_SIMILAR_TRACK_SUCCEEDED:
-      return {
-        ...state,
-        similarTracks: {
-          ...state.similarTracks,
-          [payload.trackArtist+'-'+payload.trackName ]: payload.data,
-        }
+  case UPDATE_USERNAME:
+    return state = {...state, currentUser: payload.payload};
+  case REQUEST_CURRENT_TRACK_STARTED:
+    return {
+      ...state,
+      currentTrackStarted: true,
     };
-   default:
-      return state;
+  case REQUEST_CURRENT_TRACK_SUCCEEDED:
+    return {
+      ...state,
+      currentTrack: payload.data,
+      currentTrackStarted: false,
+    };
+  case REQUEST_CURRENT_TRACK_FAILURE:
+    return {
+      ...state,
+      currentTrackStarted: false,
+    };
+  case REQUEST_CURRENT_TRACK_SIMILAR_SUCCEEDED:
+    return {
+      ...state,
+      currentSimilar: payload.data,
+    };
+
+  case REQUEST_CURRENT_TRACK_ARTIST_SUCCEEDED:
+    return {
+      ...state,
+      currentArtist: payload.data,
+    };
+  case REQUEST_CURRENT_TRACK_ARTIST_FAILURE:
+    return {
+      ...state,
+      currentArtist: {},
+    };
+
+  case REQUEST_ARTIST_INFO_SUCCEEDED:
+    return {
+      ...state,
+      selectedArtist: payload.data,
+    };
+
+  case REQUEST_SIMILAR_TRACK_SUCCEEDED:
+    return {
+      ...state,
+      similarTracks: {
+        ...state.similarTracks,
+        [payload.trackArtist+'-'+payload.trackName ]: payload.data,
+      }
+    };
+  default:
+    return state;
   }
 };

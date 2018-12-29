@@ -41,7 +41,7 @@ class ArtistOfCurrent extends React.Component{
           <img src={artistImage} className="artist_image" alt={artistName} />
           <div className="artist_name">
             <strong>
-            {artistName}
+              {artistName}
             </strong>
           </div>
           <div className="artist_left__block">
@@ -51,7 +51,7 @@ class ArtistOfCurrent extends React.Component{
                 {value.name}
               </div>
             )
-            :null}
+              :null}
           </div>
           <div className="artist_left__block">
             <strong>Tags</strong>
@@ -60,7 +60,7 @@ class ArtistOfCurrent extends React.Component{
                 {value.name}
               </div>
             )
-            :null}
+              :null}
           </div>
         </div>
         <div className="artist_right">
@@ -70,14 +70,12 @@ class ArtistOfCurrent extends React.Component{
 
         </div>
       </div>
-	  );
+    );
   }
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     currentArtist: state.lastfm.currentArtist,
-  }),
-  dispatch => ({
   }),
 )(ArtistOfCurrent);

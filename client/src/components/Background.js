@@ -24,9 +24,7 @@ class Background extends React.Component{
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     currentArtist: state.lastfm.currentArtist,
-  }),
-  dispatch => ({
   }),
 )(Background);

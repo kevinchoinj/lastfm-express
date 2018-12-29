@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as lastfmActions from 'actions/lastfm';
 import placeholder from 'media/lastfm.png';
 import UsernameForm from 'components/forms/UsernameForm';
 
-const CurrentImage = ({image, name}) => {
+const CurrentImage = ({image}) => {
   if (image.length>1){
     return (
       <img src={image} className="current_image" alt="name"/>
-    )
+    );
   }
   else {
     return (
       <img src={placeholder} className="current_image" alt="name"/>
-    )
+    );
   }
-}
+};
 
 class CurrentTrackPanel extends React.Component{
 
@@ -35,15 +35,15 @@ class CurrentTrackPanel extends React.Component{
 
     name = currentTrack.name;
     if (currentTrack.artist) {
-      artist = currentTrack.artist["#text"];
+      artist = currentTrack.artist['#text'];
     }
     if (currentTrack.image) {
       image = currentTrack.image[currentTrack.image.length - 1]['#text'];
     }
 
-	  return(
-        <div className="current_wrapper">
-          <div className="current_container">
+    return(
+      <div className="current_wrapper">
+        <div className="current_container">
           {currentTrack.artist?
             <div className="current_inner">
               <CurrentImage
@@ -51,9 +51,9 @@ class CurrentTrackPanel extends React.Component{
                 name={name}
               />
               <div className="current_overlay">
-               <strong>{artist}</strong>
-               <br/>
-               {name}
+                <strong>{artist}</strong>
+                <br/>
+                {name}
               </div>
             </div>
             :
@@ -66,12 +66,12 @@ class CurrentTrackPanel extends React.Component{
           <UsernameForm onSubmit={this.updateUsername}/>
         </div>
       </div>
-	  );
+    );
   }
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     currentTrack: state.lastfm.currentTrack,
   }),
   dispatch => ({

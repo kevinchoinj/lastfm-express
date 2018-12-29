@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as panelsActions from 'actions/panels';
@@ -8,14 +8,13 @@ import FontAwesome from 'react-fontawesome';
 
 class Navbar extends React.Component{
 
-
   render(){
 
     let {
       loadedContent,
     } = this.props;
 
-	  return(
+    return(
       <div className="navbar_wrapper">
 
         {loadedContent[siteRoutes.home]?
@@ -49,7 +48,7 @@ class Navbar extends React.Component{
               <div className="navbar_option" key={key}>
                 <FontAwesome name="plus"/>
               </div>
-            )
+            );
           }
           else {
             return (
@@ -59,26 +58,26 @@ class Navbar extends React.Component{
                     <FontAwesome name="plus"/>
                   </div>
                 </Link>
-                <div className="navbar_option__overlay" onClick={()=>console.log(value[0].split('/'))}>
+                <div className="navbar_option__overlay">
                   <div>
-                  <strong>{value[0].split('/')[2]}</strong>
+                    <strong>{decodeURIComponent(value[0].split('/')[2])}</strong>
                   </div>
                   <div>
-                  {value[0].split('/')[3]}
+                    {decodeURIComponent(value[0].split('/')[3])}
                   </div>
                 </div>
               </div>
-            )
+            );
           }
         })}
 
       </div>
-	  );
+    );
   }
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     loadedContent: state.transition.loadedContent,
     currentSimilar: state.panels.currentSimilar,
   }),

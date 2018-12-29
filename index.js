@@ -49,7 +49,7 @@ app.post('/similar-tracks', urlencodedParser, (req, res) => {
   let reqBody = req.body;
   let trackName = reqBody.trackName;
   let trackArtist = reqBody.trackArtist;
-  fetch(LASTFM_ROOT +"/?method=track.getsimilar&limit=40&artist="+trackArtist+"&track="+trackName+"&api_key="+lastfmKey+"&format=json")
+  fetch(LASTFM_ROOT +"/?method=track.getsimilar&limit=34&artist="+trackArtist+"&track="+trackName+"&api_key="+lastfmKey+"&format=json")
     .then(res => res.json())
     .then(body => {
       res.json(body);
@@ -71,9 +71,8 @@ app.post('/artist-info', urlencodedParser, (req, res) => {
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build'));
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
-
 const port = process.env.PORT || 5000;
 
 server = app.listen(port, function(){

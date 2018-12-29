@@ -42,7 +42,7 @@ const requestSimilarTrackSucceeded = (trackName, trackArtist, data) => ({
   trackName,
   trackArtist,
   data
-  });
+});
 const requestSimilarTrackFailure = (data, error) => ({type: REQUEST_SIMILAR_TRACK_FAILURE, data, error});
 
 function handleErrors(response) {
@@ -56,18 +56,18 @@ function handleErrors(response) {
 =          UPDATE USERNAME            =
 ======================================*/
 export const updateUsername = (values) => {
-    return {
-      type: UPDATE_USERNAME,
-      payload: values.username,
-    };
-}
+  return {
+    type: UPDATE_USERNAME,
+    payload: values.username,
+  };
+};
 
 export const updateUsernameThenUpdate = (values) => {
   return (dispatch) => {
     dispatch(updateUsername(values));
     dispatch(requestCurrentTrackThenArtistSimilar());
   };
-}
+};
 
 /*======================================
 =           CURRENT TRACK             =
@@ -75,21 +75,21 @@ export const updateUsernameThenUpdate = (values) => {
 function fetchCurrentTrack(username) {
   return () => {
     return fetch('/current-track',
-    {
-      method: "POST",
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: encodeURIComponent(username),
-      })
-    })
-  }
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: encodeURIComponent(username),
+        })
+      });
+  };
 }
 function fetchCurrentTrackWithUsername() {
   return (dispatch, getState) => {
     return dispatch(fetchCurrentTrack(getState().lastfm.currentUser));
-  }
+  };
 }
 
 export function requestCurrentTrack() {
@@ -106,7 +106,7 @@ export function requestCurrentTrack() {
         }
       })
       .catch(error => dispatch(requestCurrentTrackFailure(error)));
-    }
+  };
 }
 
 function returnCurrentTrackData (json) {
@@ -122,54 +122,58 @@ function returnCurrentTrackData (json) {
 function fetchSimilarTracks(trackName, trackArtist) {
   return () => {
     return fetch('/similar-tracks',
-    {
-      method: "POST",
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        trackName: trackName,
-        trackArtist: trackArtist,
-      })
-    })
-  }
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          trackName: encodeURIComponent(trackName),
+          trackArtist: encodeURIComponent(trackArtist),
+        })
+      });
+  };
 }
 
 export function requestSimilarTrackOfCurrent () {
   return (dispatch, getState) => {
     dispatch(requestCurrentTrackSimilarStarted());
     let trackName = getState().lastfm.currentTrack.name;
-    let trackArtist = getState().lastfm.currentTrack.artist["#text"];
-    return dispatch(fetchSimilarTracks(trackName, trackArtist))
-    .then(handleErrors)
-    .then(res => res.json())
-    .then(json => {
-      let similarTracks = returnSimilarTrackData(json);
-      dispatch(requestCurrentTrackSimilarSucceeded(similarTracks));
-    })
-    .catch(error => dispatch(requestCurrentTrackSimilarFailure(error)));
-  }
+    let trackArtist = getState().lastfm.currentTrack.artist['#text'];
+    return dispatch(fetchSimilarTracks(
+      trackName,
+      trackArtist
+    ),
+    )
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        let similarTracks = returnSimilarTrackData(json);
+        dispatch(requestCurrentTrackSimilarSucceeded(similarTracks));
+      })
+      .catch(error => dispatch(requestCurrentTrackSimilarFailure(error)));
+  };
 }
 
 export function requestSimilarTrack(trackName, trackArtist) {
   return dispatch => {
     dispatch(requestSimilarTrackStarted());
     return dispatch(fetchSimilarTracks(trackName, trackArtist))
-    .then(handleErrors)
-    .then(res => res.json())
-    .then(json => {
-      let similarTrack = returnSimilarTrackData(json);
-      dispatch(requestSimilarTrackSucceeded(trackName, trackArtist, similarTrack));
-    })
-    .catch(error => dispatch(requestSimilarTrackFailure(error)));
-    }
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        let similarTrack = returnSimilarTrackData(json);
+        dispatch(requestSimilarTrackSucceeded(trackName, trackArtist, similarTrack));
+      })
+      .catch(error => dispatch(requestSimilarTrackFailure(error)));
+  };
 }
 export function requestSimilarTrackIfNoData(trackName, trackArtist) {
   return (dispatch, getState) => {
     if (!getState().lastfm.similarTracks[trackArtist+'-'+trackName]) {
       dispatch(requestSimilarTrack(trackName, trackArtist));
     }
-  }
+  };
 }
 function returnSimilarTrackData (json) {
   let similarTracks;
@@ -182,44 +186,43 @@ function returnSimilarTrackData (json) {
 function fetchArtist(trackArtist) {
   return () => {
     return fetch('/artist-info',
-    {
-      method: "POST",
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        trackArtist: encodeURIComponent(trackArtist),
-      })
-    })
-  }
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          trackArtist: encodeURIComponent(trackArtist),
+        })
+      });
+  };
 }
 export function requestArtistOfCurrent () {
   return (dispatch, getState) => {
     dispatch(requestCurrentTrackArtistStarted());
-    let trackArtist = getState().lastfm.currentTrack.artist["#text"];
+    let trackArtist = getState().lastfm.currentTrack.artist['#text'];
     return dispatch(fetchArtist(trackArtist))
-    .then(handleErrors)
-    .then(res => res.json())
-    .then(json => {
-      let artistData = returnArtistData(json);
-      dispatch(requestCurrentTrackArtistSucceeded(artistData));
-    })
-    .catch(error => dispatch(requestCurrentTrackArtistFailure(error)));
-  }
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        let artistData = returnArtistData(json);
+        dispatch(requestCurrentTrackArtistSucceeded(artistData));
+      })
+      .catch(error => dispatch(requestCurrentTrackArtistFailure(error)));
+  };
 }
 export function requestArtistInfo(trackArtist) {
   return dispatch => {
     dispatch(requestArtistInfoStarted());
     return dispatch(fetchArtist(trackArtist))
-    .then(handleErrors)
-    .then(res => res.json())
-    .then(json => {
-      console.log(json);
-      let artistData = returnSimilarTrackData(json);
-      dispatch(requestArtistInfoSucceeded(artistData));
-    })
-    .catch(error => dispatch(requestArtistInfoFailure(error)));
-    }
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(json => {
+        let artistData = returnSimilarTrackData(json);
+        dispatch(requestArtistInfoSucceeded(artistData));
+      })
+      .catch(error => dispatch(requestArtistInfoFailure(error)));
+  };
 }
 function returnArtistData (json) {
   let artistData;
@@ -235,10 +238,10 @@ export function requestCurrentTrackThenSimilar() {
       .then(function() {
         //if currently stored track is not the same as received track, get new similar tracks
         if (!getState().lastfm.currentTrackStarted) {
-          dispatch(requestSimilarTrackOfCurrent())
+          dispatch(requestSimilarTrackOfCurrent());
         }
-      })
-    }
+      });
+  };
 }
 /*======================================
 =      CURRENT TRACK ARTIST INFO       =
@@ -249,10 +252,10 @@ export function requestCurrentTrackThenArtist() {
       .then(function() {
         //if currently stored track is not the same as received track, get new similar tracks
         if (!getState().lastfm.currentTrackStarted) {
-          dispatch(requestArtistOfCurrent())
+          dispatch(requestArtistOfCurrent());
         }
-      })
-    }
+      });
+  };
 }
 /*======================================
 =    CURRENT TRACK ARTIST/SIMILAR      =
@@ -264,9 +267,9 @@ export function requestCurrentTrackThenArtistSimilar() {
         //if currently stored track is not the same as received track, get new similar tracks
         if (!getState().lastfm.currentTrackStarted) {
           dispatch(requestSimilarTrackOfCurrent())
-          .then(dispatch(requestArtistOfCurrent()));
+            .then(dispatch(requestArtistOfCurrent()));
         }
-      })
-    }
+      });
+  };
 }
 

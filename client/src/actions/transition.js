@@ -9,23 +9,31 @@ export const startTransition = (transitionStatus) => {
     type: START_TRANSITION,
     transitionStatus,
   };
-}
+};
 export const loadContent = (location, loadStatus) => {
   return{
     type: LOAD_CONTENT,
     location,
     loadStatus,
   };
-}
+};
 export const previousPageName = (pageName) => {
   return{
     type: PREVIOUS_PAGE_NAME,
     pageName,
   };
-}
-export const removePreviousContent = (pageName) => {
+};
+export const removePreviousContent = (newList) => {
   return{
     type: REMOVE_PREVIOUS_CONTENT,
-    pageName,
+    newList,
   };
-}
+};
+
+export const startRemovePreviousContent = (pageName) => {
+  return (dispatch, getState) => {
+    let clone = Object.assign({}, getState().transition.loadedContent);
+    delete clone[pageName];
+    dispatch(removePreviousContent(clone));
+  };
+};

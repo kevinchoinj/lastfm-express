@@ -6,14 +6,20 @@ import * as panelsActions from 'actions/panels';
 
 class GetSimilarOfSelected extends React.Component{
   componentDidMount(){
+
     let trackName = this.props.match.params.track;
     let trackArtist = this.props.match.params.artist;
-    this.props.lastfmActions.requestSimilarTrackIfNoData(trackName, trackArtist);
+
+    this.props.lastfmActions.requestSimilarTrackIfNoData(
+      decodeURIComponent(trackName),
+      decodeURIComponent(trackArtist),
+    );
 
     this.props.panelsActions.setCurrentPath({
-      artist: trackArtist,
-      name: trackName,
+      artist: decodeURIComponent(trackArtist),
+      name: decodeURIComponent(trackName),
     });
+
   }
 
   render(){
@@ -21,7 +27,7 @@ class GetSimilarOfSelected extends React.Component{
   }
 }
 export default connect(
-  (state, ownProps) => ({
+  () => ({
   }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),

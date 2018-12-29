@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Switch, Route} from 'react-router-dom';
@@ -28,22 +29,21 @@ class SiteRoutes extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location !== this.props.location) {
-      this.props.transitionActions.startTransition("start");
+      this.props.transitionActions.startTransition('start');
       let currentName = this.props.location.pathname;
       let nextName = nextProps.location.pathname;
       this.props.transitionActions.previousPageName(currentName);
 
       setTimeout(function(){
-        this.props.transitionActions.startTransition("end");
+        this.props.transitionActions.startTransition('end');
         if (this.props.loadedContent[currentName]){
           this.props.transitionActions.loadContent(currentName, false);
         }
         this.props.transitionActions.loadContent(nextName, true);
       }.bind(this), 400);
       setTimeout(function(){
-        this.props.transitionActions.startTransition("reset");
+        this.props.transitionActions.startTransition('reset');
       }.bind(this), 800);
-    } else if (this.props.location === nextProps.location) {
     }
   }
 
@@ -63,22 +63,22 @@ class SiteRoutes extends Component {
         <Background/>
 
         {loadedContent[siteRoutes.home]?
-        <ArtistOfCurrentPanel />:null}
+          <ArtistOfCurrentPanel />:null}
         {loadedContent[siteRoutes.currentSimilar]?
-        <SimilarOfCurrentPanel />:null}
+          <SimilarOfCurrentPanel />:null}
 
         {currentPage && currentPage.startsWith(siteRoutes.similar)?
-        <SimilarOfSelectedPanel />:null}
+          <SimilarOfSelectedPanel />:null}
 
         <Switch>
           <Route exact path={siteRoutes.home}
             render={null}/>
           <Route exact path={siteRoutes.currentSimilar}
             render={null}/>
-          <Route exact path={siteRoutes.similar+"/:artist/:track"}
+          <Route exact path={siteRoutes.similar+'/:artist/:track'}
             render={(props) =>(
               <GetSimilarOfSelected {...props} key={props.match.params.artist + props.match.params.track}/>
-          )}/>
+            )}/>
           <Route component={NotFound} />
         </Switch>
         <Navbar/>
@@ -89,7 +89,7 @@ class SiteRoutes extends Component {
 }
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     loadedContent: state.transition.loadedContent,
     transitionStatus: state.transition.transitionStatus,
   }),
