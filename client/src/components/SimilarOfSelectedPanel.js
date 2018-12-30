@@ -21,7 +21,9 @@ class SimilarOfSelectedPanel extends React.Component{
     const panelName = classNames(
       'similar_current__container',
       {
-        'similar_current__container--hidden': transitionStatus === 'start' || transitionStatus === 'end',
+        'similar_current__container--hidden':
+          transitionStatus === 'start' ||
+          transitionStatus === 'end',
       }
     );
 

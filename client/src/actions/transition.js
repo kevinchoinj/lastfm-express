@@ -34,6 +34,11 @@ export const startRemovePreviousContent = (pageName) => {
   return (dispatch, getState) => {
     let clone = Object.assign({}, getState().transition.loadedContent);
     delete clone[pageName];
-    dispatch(removePreviousContent(clone));
+    setTimeout(()=>
+      dispatch(removePreviousContent(clone))
+      , 400);
+      /*leave the track in transition.loadedContent until animation has finished
+      to prevent panel from suddenly disappearing */
   };
 };
+

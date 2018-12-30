@@ -14,7 +14,7 @@ const TrackBlock = ({trackValues}) => {
 
   trackName = trackValues.name;
   if (trackValues.image) {
-    trackImage = trackValues.image[3]['#text'];
+    trackImage = trackValues.image[2]['#text'];
   }
   if (trackValues.artist) {
     trackArtist = trackValues.artist.name;

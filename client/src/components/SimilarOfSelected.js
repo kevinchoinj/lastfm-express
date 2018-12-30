@@ -16,7 +16,7 @@ const TrackBlock = ({trackValues}) => {
 
   trackName = trackValues.name;
   if (trackValues.image) {
-    trackImage = trackValues.image[3]['#text'];
+    trackImage = trackValues.image[2]['#text'];
   }
   if (trackValues.artist) {
     trackArtist = trackValues.artist.name;
@@ -24,7 +24,7 @@ const TrackBlock = ({trackValues}) => {
 
   return (
     <div className="current_inner">
-      <Link to={siteRoutes.similar + '/' + encodeURIComponent(trackArtist) + '/' + encodeURIComponent(trackName)}>
+      <Link to={siteRoutes.similar + '/' + trackArtist + '/' + trackName}>
         <TrackImage
           trackImage = {trackImage}
           trackName = {trackName}
@@ -55,7 +55,17 @@ const TrackImage = ({trackImage, trackName}) => {
 class SimilarOfCurrent extends React.Component{
 
   closePanel = () => {
-    this.props.transitionActions.removePreviousContent(siteRoutes.similar + '/' + this.props.currentPath.artist + '/' + this.props.currentPath.name);
+    this.props.transitionActions.startRemovePreviousContent(
+      siteRoutes.similar + '/' +
+      this.props.currentPath.artist.replace(/[;,?:@&=+$#/]/g,
+        function(value) {
+          return encodeURIComponent(value);
+        }) + '/' +
+      this.props.currentPath.name.replace(/[;,?:@&=+$#/]/g,
+        function(value) {
+          return encodeURIComponent(value);
+        })
+    )
     history.push(siteRoutes.home);
   }
 
@@ -92,7 +102,6 @@ class SimilarOfCurrent extends React.Component{
         ):
           <div className="warning_message"> No Similar Tracks Found </div>
         }
-      }
       </div>
     );
   }

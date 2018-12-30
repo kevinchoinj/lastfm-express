@@ -53,8 +53,9 @@ class SiteRoutes extends Component {
       loadedContent,
     } =this.props;
 
-    let currentPage = '';
+    let currentPage = 'asdf';
     currentPage = Object.keys(loadedContent).find(key => loadedContent[key] === true);
+
 
     return (
       <div>
@@ -67,8 +68,9 @@ class SiteRoutes extends Component {
         {loadedContent[siteRoutes.currentSimilar]?
           <SimilarOfCurrentPanel />:null}
 
-        {currentPage && currentPage.startsWith(siteRoutes.similar)?
-          <SimilarOfSelectedPanel />:null}
+        {currentPage && currentPage.substring(0, siteRoutes.similar.length) === siteRoutes.similar?
+           <SimilarOfSelectedPanel/>
+        :null}
 
         <Switch>
           <Route exact path={siteRoutes.home}

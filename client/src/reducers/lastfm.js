@@ -1,5 +1,6 @@
 import {
   UPDATE_USERNAME,
+  REMOVE_PREVIOUS_TRACK,
 
   REQUEST_CURRENT_TRACK_STARTED,
   REQUEST_CURRENT_TRACK_SUCCEEDED,
@@ -34,6 +35,12 @@ export default(state=DEFAULT_STATE, payload) => {
   switch(payload.type){
   case UPDATE_USERNAME:
     return state = {...state, currentUser: payload.payload};
+  case REMOVE_PREVIOUS_TRACK:
+    return {
+      ...state,
+      similarTracks: payload.newList,
+    };
+
   case REQUEST_CURRENT_TRACK_STARTED:
     return {
       ...state,

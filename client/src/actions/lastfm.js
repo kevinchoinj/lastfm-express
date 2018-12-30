@@ -1,4 +1,5 @@
 export const UPDATE_USERNAME = Symbol('UPDATE_USERNAME');
+export const REMOVE_PREVIOUS_TRACK = Symbol('REMOVE_PREVIOUS_TRACK');
 
 export const REQUEST_CURRENT_TRACK_STARTED = Symbol('REQUEST_CURRENT_TRACK_STARTED');
 export const REQUEST_CURRENT_TRACK_SUCCEEDED = Symbol('REQUEST_CURRENT_TRACK_SUCCEEDED');
@@ -272,4 +273,3 @@ export function requestCurrentTrackThenArtistSimilar() {
       });
   };
 }
-
