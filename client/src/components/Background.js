@@ -3,15 +3,9 @@ import {connect} from 'react-redux';
 
 class Background extends React.Component{
   render(){
-    let {
-      currentArtist,
+    const {
+      artistImage,
     } = this.props;
-
-    let artistImage;
-
-    if (currentArtist.image) {
-      artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
-    }
 
     return(
       <div className="background__wrapper">
@@ -24,7 +18,17 @@ class Background extends React.Component{
 }
 
 export default connect(
-  (state) => ({
-    currentArtist: state.lastfm.currentArtist,
-  }),
+  (state) => {
+    const currentArtist = state.lastfm.currentArtist;
+    let artistImage;
+
+    if (currentArtist.image) {
+      artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
+    }
+
+    return {
+      artistImage,
+    };
+
+  },
 )(Background);

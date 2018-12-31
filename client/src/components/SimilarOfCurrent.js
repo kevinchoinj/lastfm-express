@@ -52,18 +52,12 @@ const TrackImage = ({trackImage, trackName}) => {
 class SimilarOfCurrent extends React.Component{
 
   render(){
-    let {
+    const {
       currentSimilar,
-      currentTrack,
+      artist,
+      name,
     } = this.props;
 
-    let artist;
-    let name;
-
-    name = currentTrack.name;
-    if (currentTrack.artist) {
-      artist = currentTrack.artist['#text'];
-    }
     return(
       <div className="grid_container">
         <div className="similar_first">
@@ -97,10 +91,24 @@ class SimilarOfCurrent extends React.Component{
 }
 
 export default connect(
-  (state) => ({
-    currentSimilar: state.lastfm.currentSimilar,
-    currentTrack: state.lastfm.currentTrack,
-  }),
+  (state) => {
+    const currentSimilar = state.lastfm.currentSimilar;
+    const currentTrack = state.lastfm.currentTrack;
+
+    let artist;
+    let name;
+
+    name = currentTrack.name;
+    if (currentTrack.artist) {
+      artist = currentTrack.artist['#text'];
+    }
+
+    return {
+      currentSimilar,
+      artist,
+      name,
+    };
+  },
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),

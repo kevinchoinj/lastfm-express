@@ -10,7 +10,7 @@ class Navbar extends React.Component{
 
   render(){
 
-    let {
+    const {
       loadedContent,
     } = this.props;
 
@@ -79,7 +79,6 @@ class Navbar extends React.Component{
 export default connect(
   (state) => ({
     loadedContent: state.transition.loadedContent,
-    currentSimilar: state.panels.currentSimilar,
   }),
   dispatch => ({
     panelsActions: bindActionCreators(panelsActions, dispatch),

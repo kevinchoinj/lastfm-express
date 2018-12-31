@@ -14,14 +14,16 @@ class ArtistOfCurrentPanel extends React.Component{
 
   render(){
 
-    let {
+    const {
       transitionStatus,
     } = this.props;
 
     const panelName = classNames(
       'similar_current__container',
       {
-        'similar_current__container--hidden': transitionStatus === 'start' || transitionStatus === 'end',
+        'similar_current__container--hidden':
+          transitionStatus === 'start' ||
+          transitionStatus === 'end',
       }
     );
 

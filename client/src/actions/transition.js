@@ -36,8 +36,8 @@ export const startRemovePreviousContent = (pageName) => {
     delete clone[pageName];
     setTimeout(()=>
       dispatch(removePreviousContent(clone))
-      , 400);
-      /*leave the track in transition.loadedContent until animation has finished
+    , 400);
+    /*leave the track in transition.loadedContent until animation has finished
       to prevent panel from suddenly disappearing */
   };
 };

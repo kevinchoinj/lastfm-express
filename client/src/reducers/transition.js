@@ -25,8 +25,10 @@ export default(state=DEFAULT_STATE, payload)=>
 {
   switch(payload.type){
   case START_TRANSITION:
-    state = {...state,
-      transitionStatus: payload.transitionStatus};
+    state = {
+      ...state,
+      transitionStatus: payload.transitionStatus
+    };
     return state;
   case LOAD_CONTENT:
     return {

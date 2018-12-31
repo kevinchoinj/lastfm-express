@@ -34,13 +34,15 @@ const DEFAULT_STATE={
 export default(state=DEFAULT_STATE, payload) => {
   switch(payload.type){
   case UPDATE_USERNAME:
-    return state = {...state, currentUser: payload.payload};
+    return state = {
+      ...state,
+      currentUser: payload.payload
+    };
   case REMOVE_PREVIOUS_TRACK:
     return {
       ...state,
       similarTracks: payload.newList,
     };
-
   case REQUEST_CURRENT_TRACK_STARTED:
     return {
       ...state,
@@ -85,7 +87,7 @@ export default(state=DEFAULT_STATE, payload) => {
       ...state,
       similarTracks: {
         ...state.similarTracks,
-        [payload.trackArtist+'-'+payload.trackName ]: payload.data,
+        [payload.trackIndex]: payload.data,
       }
     };
   default:

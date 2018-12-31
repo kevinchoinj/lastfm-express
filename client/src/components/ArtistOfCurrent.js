@@ -9,31 +9,13 @@ class ArtistOfCurrent extends React.Component{
 
   render(){
 
-    let {
-      currentArtist,
+    const {
+      artistName,
+      artistBio,
+      artistImage,
+      artistSimilar,
+      artistTags,
     } = this.props;
-
-    let artistName;
-    let artistBio;
-    let artistImage;
-    let artistSimilar = [];
-    let artistTags = [];
-
-    if (currentArtist) {
-      artistName = currentArtist.name;
-      if (currentArtist.bio) {
-        artistBio = currentArtist.bio.content;
-      }
-      if (currentArtist.image) {
-        artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
-      }
-      if (currentArtist.similar) {
-        artistSimilar = currentArtist.similar.artist;
-      }
-      if (currentArtist.tags) {
-        artistTags = currentArtist.tags.tag;
-      }
-    }
 
     return(
       <div className="artist_container">
@@ -75,7 +57,41 @@ class ArtistOfCurrent extends React.Component{
 }
 
 export default connect(
-  (state) => ({
-    currentArtist: state.lastfm.currentArtist,
-  }),
+  (state) => {
+    const currentArtist = state.lastfm.currentArtist;
+    let artistName;
+    let artistBio;
+    let artistImage;
+    let artistSimilar;
+    let artistTags;
+
+    let artistImages;
+
+    if (currentArtist) {
+      artistName = currentArtist.name;
+      if (currentArtist.bio) {
+        artistBio = currentArtist.bio.content;
+      }
+      if (currentArtist.image && currentArtist.image[currentArtist.image.length - 1]) {
+        artistImages = currentArtist.image[currentArtist.image.length - 1];
+        if (artistImages) {
+          artistImage = artistImages['#text'];
+        }
+      }
+      if (currentArtist.similar) {
+        artistSimilar = currentArtist.similar.artist;
+      }
+      if (currentArtist.tags) {
+        artistTags = currentArtist.tags.tag;
+      }
+    }
+    return {
+      artistName,
+      artistBio,
+      artistImage,
+      artistSimilar,
+      artistTags,
+    };
+  },
+
 )(ArtistOfCurrent);

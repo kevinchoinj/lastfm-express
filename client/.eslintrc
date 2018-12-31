@@ -1,0 +1,23 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "indent": [
+        "error",
+        2
+    ],
+    "linebreak-style": [
+        "error",
+        "windows"
+    ],
+    "quotes": [
+        "error",
+        "single"
+    ],
+    "semi": [
+        "error",
+        "always"
+    ],
+    "react/jsx-uses-vars": [2],
+    "eslint linebreak-style": [0, "error", "windows"]
+  }
+}

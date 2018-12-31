@@ -5,6 +5,7 @@ import SimilarOfCurrent from 'components/SimilarOfCurrent';
 import classNames from 'classnames';
 
 class SimilarOfCurrentPanel extends React.Component{
+
   componentDidMount() {
     Scrollbar.init(document.querySelector('#current_similar_panel'), {
       alwaysShowTracks: true,
@@ -14,7 +15,7 @@ class SimilarOfCurrentPanel extends React.Component{
 
   render(){
 
-    let {
+    const {
       transitionStatus,
     } = this.props;
 

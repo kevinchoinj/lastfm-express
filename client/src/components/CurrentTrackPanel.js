@@ -25,26 +25,16 @@ class CurrentTrackPanel extends React.Component{
   }
 
   render(){
-    let {
-      currentTrack,
+    const {
+      artist,
+      name,
+      image,
     } = this.props;
-
-    let artist;
-    let name;
-    let image;
-
-    name = currentTrack.name;
-    if (currentTrack.artist) {
-      artist = currentTrack.artist['#text'];
-    }
-    if (currentTrack.image) {
-      image = currentTrack.image[currentTrack.image.length - 1]['#text'];
-    }
 
     return(
       <div className="current_wrapper">
         <div className="current_container">
-          {currentTrack.artist?
+          {artist ?
             <div className="current_inner">
               <CurrentImage
                 image={image}
@@ -71,9 +61,25 @@ class CurrentTrackPanel extends React.Component{
 }
 
 export default connect(
-  (state) => ({
-    currentTrack: state.lastfm.currentTrack,
-  }),
+  (state) => {
+    const currentTrack = state.lastfm.currentTrack;
+    let artist;
+    let name;
+    let image;
+
+    name = currentTrack.name;
+    if (currentTrack.artist) {
+      artist = currentTrack.artist['#text'];
+    }
+    if (currentTrack.image) {
+      image = currentTrack.image[currentTrack.image.length - 1]['#text'];
+    }
+    return {
+      artist,
+      name,
+      image,
+    };
+  },
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),

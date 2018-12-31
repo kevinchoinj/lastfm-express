@@ -57,25 +57,24 @@ class SimilarOfCurrent extends React.Component{
   closePanel = () => {
     this.props.transitionActions.startRemovePreviousContent(
       siteRoutes.similar + '/' +
-      this.props.currentPath.artist.replace(/[;,?:@&=+$#/]/g,
+      this.props.currentPath.artist.replace(/[;,?:@=+$#/]/g,
         function(value) {
           return encodeURIComponent(value);
         }) + '/' +
-      this.props.currentPath.name.replace(/[;,?:@&=+$#/]/g,
+      this.props.currentPath.name.replace(/[;,?:@=+$#/]/g,
         function(value) {
           return encodeURIComponent(value);
         })
-    )
+    );
     history.push(siteRoutes.home);
   }
 
   render(){
-    let {
-      similarTracks,
+
+    const {
+      selectedSimilar,
       currentPath,
     } = this.props;
-
-    let selectedSimilar = similarTracks[this.props.currentPath.artist+'-'+this.props.currentPath.name];
 
     return(
       <div className="grid_container">
@@ -108,10 +107,18 @@ class SimilarOfCurrent extends React.Component{
 }
 
 export default connect(
-  (state) => ({
-    similarTracks: state.lastfm.similarTracks,
-    currentPath: state.panels.currentPath,
-  }),
+  (state) => {
+    const similarTracks = state.lastfm.similarTracks;
+    const currentPath = state.panels.currentPath;
+
+    let selectedSimilar;
+    selectedSimilar= similarTracks[currentPath.artist+'-'+currentPath.name];
+
+    return {
+      selectedSimilar,
+      currentPath,
+    };
+  },
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
     transitionActions: bindActionCreators(transitionActions, dispatch),

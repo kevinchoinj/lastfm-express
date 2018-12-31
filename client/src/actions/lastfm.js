@@ -38,12 +38,7 @@ const requestArtistInfoSucceeded = data => ({type: REQUEST_ARTIST_INFO_SUCCEEDED
 const requestArtistInfoFailure = (data, error) => ({type: REQUEST_ARTIST_INFO_FAILURE, data, error});
 
 const requestSimilarTrackStarted = request => ({type: REQUEST_SIMILAR_TRACK_STARTED, request});
-const requestSimilarTrackSucceeded = (trackName, trackArtist, data) => ({
-  type: REQUEST_SIMILAR_TRACK_SUCCEEDED,
-  trackName,
-  trackArtist,
-  data
-});
+const requestSimilarTrackSucceeded = (trackIndex, data) => ({type: REQUEST_SIMILAR_TRACK_SUCCEEDED, trackIndex, data});
 const requestSimilarTrackFailure = (data, error) => ({type: REQUEST_SIMILAR_TRACK_FAILURE, data, error});
 
 function handleErrors(response) {
@@ -140,7 +135,10 @@ export function requestSimilarTrackOfCurrent () {
   return (dispatch, getState) => {
     dispatch(requestCurrentTrackSimilarStarted());
     let trackName = getState().lastfm.currentTrack.name;
-    let trackArtist = getState().lastfm.currentTrack.artist['#text'];
+    let trackArtist;
+    if (getState().lastfm.currentTrack.artist) {
+      trackArtist = getState().lastfm.currentTrack.artist['#text'];
+    }
     return dispatch(fetchSimilarTracks(
       trackName,
       trackArtist
@@ -164,7 +162,8 @@ export function requestSimilarTrack(trackName, trackArtist) {
       .then(res => res.json())
       .then(json => {
         let similarTrack = returnSimilarTrackData(json);
-        dispatch(requestSimilarTrackSucceeded(trackName, trackArtist, similarTrack));
+        let trackIndex = trackArtist+'-'+trackName;
+        dispatch(requestSimilarTrackSucceeded(trackIndex, similarTrack));
       })
       .catch(error => dispatch(requestSimilarTrackFailure(error)));
   };
@@ -201,7 +200,10 @@ function fetchArtist(trackArtist) {
 export function requestArtistOfCurrent () {
   return (dispatch, getState) => {
     dispatch(requestCurrentTrackArtistStarted());
-    let trackArtist = getState().lastfm.currentTrack.artist['#text'];
+    let trackArtist;
+    if (getState().lastfm.currentTrack.artist) {
+      trackArtist = getState().lastfm.currentTrack.artist['#text'];
+    }
     return dispatch(fetchArtist(trackArtist))
       .then(handleErrors)
       .then(res => res.json())

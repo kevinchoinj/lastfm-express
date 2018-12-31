@@ -5,8 +5,8 @@ import * as lastfmActions from 'actions/lastfm';
 import * as panelsActions from 'actions/panels';
 
 class GetSimilarOfSelected extends React.Component{
-  componentDidMount(){
 
+  componentDidMount(){
     let trackName = this.props.match.params.track;
     let trackArtist = this.props.match.params.artist;
 
@@ -19,7 +19,6 @@ class GetSimilarOfSelected extends React.Component{
       artist: decodeURIComponent(trackArtist),
       name: decodeURIComponent(trackName),
     });
-
   }
 
   render(){

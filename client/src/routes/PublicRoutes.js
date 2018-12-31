@@ -51,11 +51,8 @@ class SiteRoutes extends Component {
 
     const {
       loadedContent,
+      currentPage,
     } =this.props;
-
-    let currentPage = 'asdf';
-    currentPage = Object.keys(loadedContent).find(key => loadedContent[key] === true);
-
 
     return (
       <div>
@@ -69,8 +66,8 @@ class SiteRoutes extends Component {
           <SimilarOfCurrentPanel />:null}
 
         {currentPage && currentPage.substring(0, siteRoutes.similar.length) === siteRoutes.similar?
-           <SimilarOfSelectedPanel/>
-        :null}
+          <SimilarOfSelectedPanel/>
+          :null}
 
         <Switch>
           <Route exact path={siteRoutes.home}
@@ -91,10 +88,17 @@ class SiteRoutes extends Component {
 }
 
 export default connect(
-  (state) => ({
-    loadedContent: state.transition.loadedContent,
-    transitionStatus: state.transition.transitionStatus,
-  }),
+  (state) => {
+    const loadedContent = state.transition.loadedContent;
+
+    let currentPage;
+    currentPage = Object.keys(loadedContent).find(key => loadedContent[key] === true);
+
+    return {
+      currentPage,
+      loadedContent,
+    };
+  },
   dispatch => ({
     transitionActions: bindActionCreators(transitionActions, dispatch),
   }),
