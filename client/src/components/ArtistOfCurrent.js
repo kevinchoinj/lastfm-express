@@ -1,6 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {
+  selectCurrentArtistName,
+  selectCurrentArtistBioContent,
+  selectCurrentArtistImageQuality,
+  selectCurrentArtistSimilarArtists,
+  selectCurrentArtistTagsText,
+} from 'reducers';
+
 class ArtistOfCurrent extends React.Component{
 
   createMarkup = (text) => {
@@ -10,25 +18,25 @@ class ArtistOfCurrent extends React.Component{
   render(){
 
     const {
-      artistName,
-      artistBio,
-      artistImage,
-      artistSimilar,
-      artistTags,
+      name,
+      bio,
+      image,
+      similar,
+      tags,
     } = this.props;
 
     return(
       <div className="artist_container">
         <div className="artist_left">
-          <img src={artistImage} className="artist_image" alt={artistName} />
+          <img src={image} className="artist_image" alt={name} />
           <div className="artist_name">
             <strong>
-              {artistName}
+              {name}
             </strong>
           </div>
           <div className="artist_left__block">
             <strong>Similar Artists</strong>
-            {artistSimilar && artistSimilar.length? artistSimilar.map((value, key) =>
+            {similar && similar.length? similar.map((value, key) =>
               <div key={key}>
                 {value.name}
               </div>
@@ -37,7 +45,7 @@ class ArtistOfCurrent extends React.Component{
           </div>
           <div className="artist_left__block">
             <strong>Tags</strong>
-            {artistTags && artistTags.length? artistTags.map((value, key) =>
+            {tags && tags.length? tags.map((value, key) =>
               <div key={key}>
                 {value.name}
               </div>
@@ -47,7 +55,7 @@ class ArtistOfCurrent extends React.Component{
         </div>
         <div className="artist_right">
           <div>
-            <div dangerouslySetInnerHTML={this.createMarkup(artistBio)} />
+            <div dangerouslySetInnerHTML={this.createMarkup(bio)} />
           </div>
 
         </div>
@@ -57,41 +65,11 @@ class ArtistOfCurrent extends React.Component{
 }
 
 export default connect(
-  (state) => {
-    const currentArtist = state.lastfm.currentArtist;
-    let artistName;
-    let artistBio;
-    let artistImage;
-    let artistSimilar;
-    let artistTags;
-
-    let artistImages;
-
-    if (currentArtist) {
-      artistName = currentArtist.name;
-      if (currentArtist.bio) {
-        artistBio = currentArtist.bio.content;
-      }
-      if (currentArtist.image && currentArtist.image[currentArtist.image.length - 1]) {
-        artistImages = currentArtist.image[currentArtist.image.length - 1];
-        if (artistImages) {
-          artistImage = artistImages['#text'];
-        }
-      }
-      if (currentArtist.similar) {
-        artistSimilar = currentArtist.similar.artist;
-      }
-      if (currentArtist.tags) {
-        artistTags = currentArtist.tags.tag;
-      }
-    }
-    return {
-      artistName,
-      artistBio,
-      artistImage,
-      artistSimilar,
-      artistTags,
-    };
-  },
-
+  (state) => ({
+    name: selectCurrentArtistName(state),
+    bio: selectCurrentArtistBioContent(state),
+    image: selectCurrentArtistImageQuality(state),
+    similar: selectCurrentArtistSimilarArtists(state),
+    tags: selectCurrentArtistTagsText(state),
+  }),
 )(ArtistOfCurrent);

@@ -1,13 +1,21 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as lastfmActions from 'actions/lastfm';
-import * as transitionActions from 'actions/transition';
-import placeholder from 'media/lastfm.png';
 import {Link} from 'react-router-dom';
 import {siteRoutes} from 'data/siteRoutes';
 import {history} from 'store';
 import FontAwesome from 'react-fontawesome';
+
+import * as lastfmActions from 'actions/lastfm';
+import * as transitionActions from 'actions/transition';
+
+import placeholder from 'media/lastfm.png';
+
+import {
+  selectSelectedSimilarTracks,
+  selectCurrentPathName,
+  selectCurrentPathArtist,
+} from 'reducers';
 
 const TrackBlock = ({trackValues}) => {
   let trackImage;
@@ -72,8 +80,9 @@ class SimilarOfCurrent extends React.Component{
   render(){
 
     const {
-      selectedSimilar,
-      currentPath,
+      similarTracks,
+      pathName,
+      pathArtist,
     } = this.props;
 
     return(
@@ -86,12 +95,12 @@ class SimilarOfCurrent extends React.Component{
             <FontAwesome name="times"/>
           </div>
           <div className="current_overlay">
-            <strong>{currentPath.artist}</strong>
+            <strong>{pathArtist}</strong>
             <br/>
-            {currentPath.name}
+            {pathName}
           </div>
         </div>
-        {selectedSimilar && selectedSimilar.length ? selectedSimilar.map((value, key)=>(
+        {similarTracks && similarTracks.length ? similarTracks.map((value, key)=>(
           <div key={key}>
             <TrackBlock
               trackValues = {value}
@@ -107,18 +116,11 @@ class SimilarOfCurrent extends React.Component{
 }
 
 export default connect(
-  (state) => {
-    const similarTracks = state.lastfm.similarTracks;
-    const currentPath = state.panels.currentPath;
-
-    let selectedSimilar;
-    selectedSimilar= similarTracks[currentPath.artist+'-'+currentPath.name];
-
-    return {
-      selectedSimilar,
-      currentPath,
-    };
-  },
+  (state) => ({
+    similarTracks: selectSelectedSimilarTracks(state),
+    pathName: selectCurrentPathName(state),
+    pathArtist: selectCurrentPathArtist(state),
+  }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
     transitionActions: bindActionCreators(transitionActions, dispatch),

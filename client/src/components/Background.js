@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {selectCurrentTrackImageQuality} from 'reducers';
+
 class Background extends React.Component{
   render(){
     const {
@@ -18,17 +20,7 @@ class Background extends React.Component{
 }
 
 export default connect(
-  (state) => {
-    const currentArtist = state.lastfm.currentArtist;
-    let artistImage;
-
-    if (currentArtist.image) {
-      artistImage = currentArtist.image[currentArtist.image.length - 1]['#text'];
-    }
-
-    return {
-      artistImage,
-    };
-
-  },
+  (state) => ({
+    artistImage: selectCurrentTrackImageQuality(state),
+  }),
 )(Background);

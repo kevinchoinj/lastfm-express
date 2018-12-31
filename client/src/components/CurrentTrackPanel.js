@@ -5,6 +5,12 @@ import * as lastfmActions from 'actions/lastfm';
 import placeholder from 'media/lastfm.png';
 import UsernameForm from 'components/forms/UsernameForm';
 
+import {
+  selectCurrentTrackName,
+  selectCurrentTrackArtistText,
+  selectCurrentTrackImageQuality,
+} from 'reducers';
+
 const CurrentImage = ({image}) => {
   if (image.length>1){
     return (
@@ -61,25 +67,11 @@ class CurrentTrackPanel extends React.Component{
 }
 
 export default connect(
-  (state) => {
-    const currentTrack = state.lastfm.currentTrack;
-    let artist;
-    let name;
-    let image;
-
-    name = currentTrack.name;
-    if (currentTrack.artist) {
-      artist = currentTrack.artist['#text'];
-    }
-    if (currentTrack.image) {
-      image = currentTrack.image[currentTrack.image.length - 1]['#text'];
-    }
-    return {
-      artist,
-      name,
-      image,
-    };
-  },
+  (state) => ({
+    name: selectCurrentTrackName(state),
+    artist: selectCurrentTrackArtistText(state),
+    image: selectCurrentTrackImageQuality(state),
+  }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),

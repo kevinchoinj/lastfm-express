@@ -1,11 +1,18 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as lastfmActions from 'actions/lastfm';
-import placeholder from 'media/lastfm.png';
 import {Link} from 'react-router-dom';
-import {siteRoutes} from 'data/siteRoutes';
 import FontAwesome from 'react-fontawesome';
+
+import * as lastfmActions from 'actions/lastfm';
+import {siteRoutes} from 'data/siteRoutes';
+import {
+  selectCurrentTrackName,
+  selectCurrentTrackArtistText,
+  selectCurrentSimilar,
+} from 'reducers';
+
+import placeholder from 'media/lastfm.png';
 
 const TrackBlock = ({trackValues}) => {
   let trackImage;
@@ -84,31 +91,21 @@ class SimilarOfCurrent extends React.Component{
           </div>
         )
         ):
-          <div className="warning_message"> No Similar Tracks Found </div>}
+          <div className="warning_message">
+            No Similar Tracks Found
+          </div>
+        }
       </div>
     );
   }
 }
 
 export default connect(
-  (state) => {
-    const currentSimilar = state.lastfm.currentSimilar;
-    const currentTrack = state.lastfm.currentTrack;
-
-    let artist;
-    let name;
-
-    name = currentTrack.name;
-    if (currentTrack.artist) {
-      artist = currentTrack.artist['#text'];
-    }
-
-    return {
-      currentSimilar,
-      artist,
-      name,
-    };
-  },
+  (state) => ({
+    currentSimilar: selectCurrentSimilar(state),
+    name: selectCurrentTrackName(state),
+    artist: selectCurrentTrackArtistText(state),
+  }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
   }),
