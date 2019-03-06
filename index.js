@@ -3,7 +3,7 @@ const express = require("express");
 var bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
-
+const compression = require('compression');
 const app = express();
 
 app.use(cors());
@@ -19,6 +19,9 @@ try{
 catch(err){
   lastfmKey = process.env.REACT_APP_LASTFM_KEY;
 }
+
+app.use(compression());
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -73,7 +76,7 @@ app.post('/artist-info', urlencodedParser, (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 1501;
 
 server = app.listen(port, function(){
   console.log(`server is running on port ${port}`)
