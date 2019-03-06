@@ -36,21 +36,19 @@ class ArtistOfCurrent extends React.Component{
           </div>
           <div className="artist_left__block">
             <strong>Similar Artists</strong>
-            {similar && similar.length? similar.map((value, key) =>
+            {similar && similar.length && similar.map((value, key) =>
               <div key={key}>
                 {value.name}
               </div>
-            )
-              :null}
+            )}
           </div>
           <div className="artist_left__block">
             <strong>Tags</strong>
-            {tags && tags.length? tags.map((value, key) =>
+            {tags && tags.length && tags.map((value, key) =>
               <div key={key}>
                 {value.name}
               </div>
-            )
-              :null}
+            )}
           </div>
         </div>
         <div className="artist_right">

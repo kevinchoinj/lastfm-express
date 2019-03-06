@@ -1,7 +1,6 @@
 export const START_TRANSITION = Symbol('START_TRANSITION');
 export const LOAD_CONTENT = Symbol('LOAD_CONTENT');
 export const PREVIOUS_PAGE_NAME = Symbol('PREVIOUS_PAGE_NAME');
-
 export const REMOVE_PREVIOUS_CONTENT = Symbol('REMOVE_PREVIOUS_CONTENT');
 
 export const startTransition = (transitionStatus) => {

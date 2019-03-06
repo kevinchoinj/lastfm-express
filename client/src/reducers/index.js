@@ -69,7 +69,6 @@ export const selectCurrentArtistBioContent = createSelector(
 export const selectCurrentArtistImage = createSelector(
   selectCurrentArtist,
   (currentArtist) => {
-    console.log(currentArtist.image);
     return currentArtist.image ;
   }
 );

@@ -29,7 +29,7 @@
   opacity: .05;
 
 }
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1440px){
   .background__container {
     width: 80%;
   }

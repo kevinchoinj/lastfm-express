@@ -60,14 +60,13 @@ class SiteRoutes extends Component {
 
         <Background/>
 
-        {loadedContent[siteRoutes.home]?
-          <ArtistOfCurrentPanel />:null}
-        {loadedContent[siteRoutes.currentSimilar]?
-          <SimilarOfCurrentPanel />:null}
+        {loadedContent[siteRoutes.home] &&
+          <ArtistOfCurrentPanel />}
+        {loadedContent[siteRoutes.currentSimilar] &&
+          <SimilarOfCurrentPanel />}
 
-        {currentPage && currentPage.substring(0, siteRoutes.similar.length) === siteRoutes.similar?
-          <SimilarOfSelectedPanel/>
-          :null}
+        {currentPage && currentPage.substring(0, siteRoutes.similar.length) === siteRoutes.similar &&
+          <SimilarOfSelectedPanel/>}
 
         <Switch>
           <Route exact path={siteRoutes.home}
