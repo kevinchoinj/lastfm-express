@@ -70,7 +70,7 @@ export const updateUsernameThenUpdate = (values) => {
 ======================================*/
 function fetchCurrentTrack(username) {
   return () => {
-    return fetch('/current-track',
+    return fetch('/api/v1/lastfm/current',
       {
         method: 'POST',
         headers: {
@@ -117,7 +117,7 @@ function returnCurrentTrackData (json) {
 
 function fetchSimilarTracks(trackName, trackArtist) {
   return () => {
-    return fetch('/similar-tracks',
+    return fetch('/api/v1/lastfm/similar',
       {
         method: 'POST',
         headers: {
@@ -185,7 +185,7 @@ function returnSimilarTrackData (json) {
 ======================================*/
 function fetchArtist(trackArtist) {
   return () => {
-    return fetch('/artist-info',
+    return fetch('/api/v1/lastfm/artist',
       {
         method: 'POST',
         headers: {

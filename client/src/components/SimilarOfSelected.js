@@ -15,6 +15,7 @@ import {
   selectSelectedSimilarTracks,
   selectCurrentPathName,
   selectCurrentPathArtist,
+  selectCurrentPath,
 } from 'reducers';
 
 const TrackBlock = ({trackValues}) => {
@@ -120,6 +121,7 @@ export default connect(
     similarTracks: selectSelectedSimilarTracks(state),
     pathName: selectCurrentPathName(state),
     pathArtist: selectCurrentPathArtist(state),
+    currentPath: selectCurrentPath(state),
   }),
   dispatch => ({
     lastfmActions: bindActionCreators(lastfmActions, dispatch),
