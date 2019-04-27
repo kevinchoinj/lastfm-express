@@ -162,7 +162,7 @@ export function requestSimilarTrack(trackName, trackArtist) {
       .then(res => res.json())
       .then(json => {
         let similarTrack = returnSimilarTrackData(json);
-        let trackIndex = trackArtist+'-'+trackName;
+        let trackIndex = `${trackArtist}-${trackName}`;
         dispatch(requestSimilarTrackSucceeded(trackIndex, similarTrack));
       })
       .catch(error => dispatch(requestSimilarTrackFailure(error)));
@@ -170,7 +170,7 @@ export function requestSimilarTrack(trackName, trackArtist) {
 }
 export function requestSimilarTrackIfNoData(trackName, trackArtist) {
   return (dispatch, getState) => {
-    if (!getState().lastfm.similarTracks[trackArtist+'-'+trackName]) {
+    if (!getState().lastfm.similarTracks[`${trackArtist}-${trackName}`]) {
       dispatch(requestSimilarTrack(trackName, trackArtist));
     }
   };

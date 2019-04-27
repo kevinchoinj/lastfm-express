@@ -73,9 +73,9 @@ class SiteRoutes extends Component {
             render={null}/>
           <Route exact path={siteRoutes.currentSimilar}
             render={null}/>
-          <Route exact path={siteRoutes.similar+'/:artist/:track'}
+          <Route exact path={`${siteRoutes.similar}/:artist/:track`}
             render={(props) =>(
-              <GetSimilarOfSelected {...props} key={props.match.params.artist + props.match.params.track}/>
+              <GetSimilarOfSelected {...props} key={`${props.match.params.artist}${props.match.params.track}`}/>
             )}/>
           <Route component={NotFound} />
         </Switch>

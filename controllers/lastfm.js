@@ -12,7 +12,7 @@ const lastfmKey = json.lastfmKey;
 class LastfmController {
 
   getCurrentTrack(req, res) {
-    fetch(LASTFM_ROOT +"/?method=user.getrecenttracks&user=shodyra&api_key="+lastfmKey+"&limit=1&format=json")
+    fetch(`${LASTFM_ROOT}/?method=user.getrecenttracks&user=shodyra&api_key=${lastfmKey}&limit=1&format=json`)
       .then(res => res.json())
       .then(body => {
         res.json(body);
@@ -25,7 +25,7 @@ class LastfmController {
   postCurrentTrack(req, res) {
     let reqBody = req.body;
     let username = reqBody.username;
-    fetch(LASTFM_ROOT +"/?method=user.getrecenttracks&user="+username+"&api_key="+lastfmKey+"&limit=1&format=json")
+    fetch(`${LASTFM_ROOT}/?method=user.getrecenttracks&user=${username}&api_key=${lastfmKey}&limit=1&format=json`)
       .then(res => res.json())
       .then(body => {
         res.json(body);
@@ -39,7 +39,7 @@ class LastfmController {
     let reqBody = req.body;
     let trackName = reqBody.trackName;
     let trackArtist = reqBody.trackArtist;
-    fetch(LASTFM_ROOT +"/?method=track.getsimilar&limit=34&artist="+trackArtist+"&track="+trackName+"&api_key="+lastfmKey+"&format=json")
+    fetch(`${LASTFM_ROOT}/?method=track.getsimilar&limit=34&artist=${trackArtist}&track=${trackName}&api_key=${lastfmKey}&format=json`)
       .then(res => res.json())
       .then(body => {
         res.json(body);
@@ -52,7 +52,7 @@ class LastfmController {
   postArtistInfo(req, res) {
     let reqBody = req.body;
     let trackArtist = reqBody.trackArtist;
-    fetch(LASTFM_ROOT +"/?method=artist.getinfo&artist="+trackArtist+"&api_key="+lastfmKey+"&format=json")
+    fetch(`${LASTFM_ROOT}/?method=artist.getinfo&artist=${trackArtist}&api_key=${lastfmKey}&format=json`)
       .then(res => res.json())
       .then(body => {
         res.json(body);

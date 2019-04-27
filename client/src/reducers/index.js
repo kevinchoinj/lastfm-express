@@ -120,7 +120,7 @@ export const selectSelectedSimilarTracks = createSelector(
   selectCurrentPathArtist,
   (similarTracks, currentPathName, currentPathArtist) => {
     if (similarTracks) {
-      return similarTracks[currentPathArtist+'-'+currentPathName];
+      return similarTracks[`${currentPathArtist}-${currentPathName}`];
     }
   }
 );
