@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import GetCurrentTrack from 'services/GetCurrentTrack';
+import GetCurrentTrack from 'components/services/GetCurrentTrack';
 import PublicRoutes from 'routes/PublicRoutes';
 
 import 'styles/main.css';

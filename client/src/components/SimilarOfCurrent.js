@@ -28,7 +28,7 @@ const TrackBlock = ({trackValues}) => {
   }
   return (
     <div className="current_inner">
-      <Link to={siteRoutes.similar + '/' + encodeURIComponent(trackArtist) + '/' + encodeURIComponent(trackName)}>
+      <Link to={`${siteRoutes.similar}/${trackArtist}/${trackName}`}>
         <TrackImage
           trackImage = {trackImage}
           trackName = {trackName}

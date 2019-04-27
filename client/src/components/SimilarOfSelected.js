@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 import {siteRoutes} from 'data/siteRoutes';
 import {history} from 'store';
 import FontAwesome from 'react-fontawesome';
-import {convertToURI} from 'actions/parseStrings';
 import * as lastfmActions from 'actions/lastfm';
 import * as transitionActions from 'actions/transition';
 
@@ -65,7 +64,7 @@ class SimilarOfCurrent extends React.Component{
 
   closePanel = () => {
     this.props.transitionActions.startRemovePreviousContent(
-      `${siteRoutes.similar}/${convertToURI(this.props.currentPath.artist)}/${convertToURI(this.props.currentPath.name)}`
+      `${siteRoutes.similar}/${this.props.currentPath.artist}/${this.props.currentPath.name}`
     );
     history.push(siteRoutes.home);
   }

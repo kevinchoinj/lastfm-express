@@ -11,13 +11,13 @@ class GetSimilarOfSelected extends React.Component{
     let trackArtist = this.props.match.params.artist;
 
     this.props.lastfmActions.requestSimilarTrackIfNoData(
-      decodeURIComponent(trackName),
-      decodeURIComponent(trackArtist),
+      trackName,
+      trackArtist,
     );
 
     this.props.panelsActions.setCurrentPath({
-      artist: decodeURIComponent(trackArtist),
-      name: decodeURIComponent(trackName),
+      artist: trackArtist,
+      name: trackName,
     });
   }
 

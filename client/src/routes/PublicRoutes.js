@@ -14,7 +14,7 @@ import SimilarOfSelectedPanel from 'components/SimilarOfSelectedPanel';
 import NotFound from 'pages/NotFound';
 
 /* Services */
-import GetSimilarOfSelected from 'services/GetSimilarOfSelected';
+import GetSimilarOfSelected from 'components/services/GetSimilarOfSelected';
 
 /* Components */
 import Navbar from 'components/navbar/Navbar';
