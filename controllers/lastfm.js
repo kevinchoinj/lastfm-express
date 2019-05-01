@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 const {
   sendError,
-} = require('../errors.js');
+} = require('../couch.js');
 
 const json = require('../config.json');
 

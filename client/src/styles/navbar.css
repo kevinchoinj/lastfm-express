@@ -11,9 +11,6 @@
 .navbar_wrapper a {
   text-decoration: none;
   color: #999;
-  -webkit-transition: .3s ease-out;
-  -moz-transition: .3s ease-out;
-  -o-transition: .3s ease-out;
   transition: .3s ease-out;
 }
 .navbar_wrapper a:hover {
@@ -39,9 +36,6 @@
   z-index:999;
   color: #000;
   font-size: 12px;
-  -webkit-transition: .3s ease-out;
-  -moz-transition: .3s ease-out;
-  -o-transition: .3s ease-out;
   transition: .3s ease-out;
   white-space: nowrap;
   pointer-events: none;

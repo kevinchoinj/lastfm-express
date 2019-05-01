@@ -28,9 +28,6 @@
   margin: 4px 0px;
   padding: 7px;
   cursor: pointer;
-  -webkit-transition: .3s ease-out;
-  -moz-transition: .3s ease-out;
-  -o-transition: .3s ease-out;
   transition: .3s ease-out;
   font-size: 13px;
   font-family: 'Open Sans', Helvetica, sans-serif;
